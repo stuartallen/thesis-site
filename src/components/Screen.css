@@ -1,0 +1,6 @@
+#screenContainer {
+    background-color: aqua;
+    border-radius: 10px;
+    width: 75%;
+    height: fit-content;
+}
