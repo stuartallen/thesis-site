@@ -8,3 +8,10 @@
 
   background-color: rgb(37, 37, 37);
 }
+
+.inner {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

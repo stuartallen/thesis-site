@@ -1,6 +1,12 @@
-#screenContainer {
+.screenContainer {
     background-color: aqua;
     border-radius: 10px;
     width: 75%;
-    height: fit-content;
+    height: 30%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px;
 }

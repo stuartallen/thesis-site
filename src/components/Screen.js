@@ -1,12 +1,22 @@
 import React from "react";
 import "./Screen.css"
+import { Canvas } from "@react-three/fiber";
 
-const Screen = () => {
+import NormalMix from "./NormalMix";
+
+const Screen = (screenName) => {
+
     return (
         <>
-            <div id="screenContainer">
-                Here's a screen
-                <canvas></canvas>
+            <div className="screenContainer">
+                <Canvas
+                    camera={{
+                        position: [0, 3, 9]
+                    }}
+                >
+                    <color attach={"background"} args={['black']}/>
+                    <NormalMix />
+                </Canvas>
             </div>
         </>
     )
