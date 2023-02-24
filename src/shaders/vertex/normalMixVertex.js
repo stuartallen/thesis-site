@@ -1,3 +1,4 @@
+const normalMixVertex = `
 uniform vec2 uMean1;
 uniform float uDeterminant1;
 uniform mat2 uInverseCovariance1;
@@ -33,10 +34,13 @@ void main() {
 	probability = 	uTheta1 * pdf(uMean1, uDeterminant1, uInverseCovariance1, vec2(position.x, position.y)) +
 					uTheta2 * pdf(uMean2, uDeterminant2, uInverseCovariance2, vec2(position.x, position.y)) + 
 					uTheta3 * pdf(uMean3, uDeterminant3, uInverseCovariance3, vec2(position.x, position.y));
-	modelPosition.z += 30.0 * probability;
+	modelPosition.y += 30.0 * probability;
 
 	vec4 viewPosition = viewMatrix * modelPosition;
 	vec4 projectedPosition = projectionMatrix * viewPosition;
 
 	gl_Position = projectedPosition; 
 } 
+`
+
+export default normalMixVertex

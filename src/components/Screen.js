@@ -2,9 +2,11 @@ import React from "react";
 import "./Screen.css"
 import { Canvas } from "@react-three/fiber";
 
-import NormalMix from "./NormalMix";
+import NormalMix from "./scenes/NormalMix";
+import LineIntegral from "./scenes/LineIntegral";
 
-const Screen = (screenName) => {
+const Screen = (scene) => {
+    console.log(scene.scene)
 
     return (
         <>
@@ -15,7 +17,11 @@ const Screen = (screenName) => {
                     }}
                 >
                     <color attach={"background"} args={['black']}/>
-                    <NormalMix />
+                    {scene.scene == "normalMix" ?
+                        <NormalMix /> :
+                        scene.scene == "lineIntegral" ? <LineIntegral /> :
+                        null
+                    }
                 </Canvas>
             </div>
         </>
