@@ -4,6 +4,7 @@ import { Canvas } from "@react-three/fiber";
 
 import NormalMix from "./scenes/NormalMix";
 import LineIntegral from "./scenes/LineIntegral";
+import EMVisualization from "./scenes/EMVisualization";
 
 const Screen = (scene) => {
     console.log(scene.scene)
@@ -19,8 +20,11 @@ const Screen = (scene) => {
                     <color attach={"background"} args={['black']}/>
                     {scene.scene == "normalMix" ?
                         <NormalMix /> :
-                        scene.scene == "lineIntegral" ? <LineIntegral /> :
-                        null
+                        scene.scene == "lineIntegral" ? 
+                            <LineIntegral /> :
+                            scene.scene == "emVisualization" ? 
+                                <EMVisualization />:
+                                null
                     }
                 </Canvas>
             </div>

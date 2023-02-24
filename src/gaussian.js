@@ -31,5 +31,5 @@ export default function gaussian(x, y, a, b, c, d) {
     mean[0] = x
     mean[1] = y
 
-    return [mean, determinant, invCov]
+    return [mean, determinant, invCov, [a, b, c, d]]
 }
