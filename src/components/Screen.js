@@ -7,8 +7,6 @@ import LineIntegral from "./scenes/LineIntegral";
 import EMVisualization from "./scenes/EMVisualization";
 
 const Screen = (scene) => {
-    console.log(scene.scene)
-
     return (
         <>
             <div className="screenContainer">
