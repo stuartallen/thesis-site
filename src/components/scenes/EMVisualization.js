@@ -6,7 +6,7 @@ import gaussian from "../../gaussian"
 
 import MultivariateNormal from 'multivariate-normal'
 import { randInt } from 'three/src/math/MathUtils'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Datapoints from './parts/Datapoints'
 import LiveNormals from './parts/LiveNormals'
 const GMM = require('gaussian-mixture-model')
@@ -83,6 +83,10 @@ export default function EMVisualization() {
         means: initMeans,
         covariances: initCovariances
     })
+    for(const point of dataPositions) {
+        initLearnMixture.addPoint(point)
+    }
+    const learnMixWithFuncs = useRef(initLearnMixture)
     const [learnMixture, setLearnMixture] = useState(initLearnMixture)
 
     useEffect(() => {
@@ -98,36 +102,35 @@ export default function EMVisualization() {
     useFrame((state, delta) => {
         startTime += delta
         if(startTime > 1) {
-            const updatedMixture = new GMM.GMM({
-                weights: learnMixture.weights,
-                means: learnMixture.means,
-                covariances: learnMixture.covariances
-            })
+            // const updatedMixture = new GMM.GMM({
+            //     weights: learnMixture.weights,
+            //     means: learnMixture.means,
+            //     covariances: learnMixture.covariances
+            // })
+            // console.log(updatedMixture)
+            // updatedMixture.weights = learnMixture.weights
+            // console.log(updatedMixture)
 
-            for(const point of dataPositions) {
-                updatedMixture.addPoint(point)
-            }
+            // for(const point of dataPositions) {
+            //     updatedMixture.addPoint(point)
+            // }
 
-            updatedMixture.runExpectation()
-            updatedMixture.runMaximization()
-            updatedMixture.runCleanUp()
+            // // updatedMixture.runExpectation()
+            // // updatedMixture.runMaximization()
+            // // updatedMixture.runCleanUp()
 
             // updatedMixture.runEM(100)
 
-            updatePointColors(learnMixture, dataset, setDataset)
+            learnMixWithFuncs.current.runEM(100)
 
-            setLearnMixture({
-                ...learnMixture,
-                weights: updatedMixture.weights,
-                means: updatedMixture.means,
-                covariances: updatedMixture.covariances
-            })
+            updatePointColors(learnMixWithFuncs.current, dataset, setDataset)
+
+            setLearnMixture(learnMixWithFuncs.current)
         }
     })
 
     return (<>
         <orbitControls args={[camera, gl.domElement]}/>
-
         
         <mesh rotation-x={Math.PI * -0.5} position-y={-0.1}>
             <planeGeometry args={[10, 10, 20, 20]}/>
