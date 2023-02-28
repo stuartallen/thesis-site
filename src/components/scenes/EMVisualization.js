@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { useThree, extend } from "@react-three/fiber"
+import { useThree, extend, useFrame } from "@react-three/fiber"
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 import gaussian from "../../gaussian"
@@ -12,7 +12,7 @@ import LiveNormals from './parts/LiveNormals'
 const GMM = require('gaussian-mixture-model')
 
 const thetas = [0.3, 0.4, 0.3]
-const NUM_POINTS = 500
+const NUM_POINTS = 100
 
 extend({OrbitControls})
 
@@ -20,15 +20,16 @@ export default function EMVisualization() {
 
     //  True Distribution
 
-    const gauss1 = gaussian(0.0, 2.0, 1.0, 0.0, 0.0, 1.0)
-    const gauss2 = gaussian(2.0, -2.0, 2.0, -1.0, 2.0, 1.0)
-    const gauss3 = gaussian(-3.0, -2.0, 1.0, -0.9, 0.0, 1.0)
+    const downScale = 2
+    const gauss1 = gaussian(0.0, 2.0, 1.0 / downScale, 0.0/ downScale, 0.0/ downScale, 1.0/ downScale)
+    const gauss2 = gaussian(2.0, -2.0, 2.0/ downScale, -1.0/ downScale, 2.0/ downScale, 1.0/ downScale)
+    const gauss3 = gaussian(-3.0, -2.0, 1.0/ downScale, -0.9/ downScale, 0.0/ downScale, 1.0/ downScale)
 
     const dists = [ gauss1, gauss2, gauss3 ]
 
     const { camera, gl } = useThree()
 
-    //  Dataset visualization
+    //  Dataset initialization
 
     const dataPositions = []
     for(let i = 0; i < dists.length; i++) {
@@ -48,9 +49,11 @@ export default function EMVisualization() {
     })
     const [dataset, setDataset] = useState(initDataset)
 
-    const initMeans = []
+    //  Initialize cluster attributes
 
     //  Initialize means to a random point
+    const initMeans = []
+
     for(let i = 0; i < 3; i++) {
         let val = dataPositions[randInt(0, dataPositions.length)]
 
@@ -61,12 +64,8 @@ export default function EMVisualization() {
 
         initMeans.push(val)
     }
-    // const initMeans = [
-    //     [0,-2],
-    //     [4,4],
-    //     [-4,4]
-    // ]
 
+    //  Initialize weights & covariance
     const initWeights = []
     const initCovariances = []
     //  Yes this should be i IN
@@ -79,15 +78,12 @@ export default function EMVisualization() {
         )
     }
 
-    const [weights, setWeights] = useState(initWeights)
-    const [covariances, setCovariances] = useState(initCovariances)
-    const [means, setMeans] = useState(initMeans)
-
-    const learnMixture = new GMM.GMM({
-        weights: weights,
-        means: means,
-        covariances: covariances
+    const initLearnMixture = new GMM.GMM({
+        weights: initWeights,
+        means: initMeans,
+        covariances: initCovariances
     })
+    const [learnMixture, setLearnMixture] = useState(initLearnMixture)
 
     useEffect(() => {
         //  Yes this library is kinda code smelly
@@ -98,6 +94,37 @@ export default function EMVisualization() {
         updatePointColors(learnMixture, dataset, setDataset)
     }, [])
 
+    let startTime = 0
+    useFrame((state, delta) => {
+        startTime += delta
+        if(startTime > 1) {
+            const updatedMixture = new GMM.GMM({
+                weights: learnMixture.weights,
+                means: learnMixture.means,
+                covariances: learnMixture.covariances
+            })
+
+            for(const point of dataPositions) {
+                updatedMixture.addPoint(point)
+            }
+
+            updatedMixture.runExpectation()
+            updatedMixture.runMaximization()
+            updatedMixture.runCleanUp()
+
+            // updatedMixture.runEM(100)
+
+            updatePointColors(learnMixture, dataset, setDataset)
+
+            setLearnMixture({
+                ...learnMixture,
+                weights: updatedMixture.weights,
+                means: updatedMixture.means,
+                covariances: updatedMixture.covariances
+            })
+        }
+    })
+
     return (<>
         <orbitControls args={[camera, gl.domElement]}/>
 
@@ -107,18 +134,23 @@ export default function EMVisualization() {
             <meshBasicMaterial wireframe side={THREE.DoubleSide}/>
         </mesh>
         <Datapoints dataset={dataset}/>
-        <LiveNormals weights={weights} means={means} covariances={covariances}/>
+        <LiveNormals learnMixture={learnMixture}/>
     </>)
 }
 
 const updatePointColors = (learnMixture, dataset, setDataset) => {
     const updatedDataset = []
 
+    const predictMixture = new GMM.GMM({
+        weights: learnMixture.weights,
+        means: learnMixture.means,
+        covariances: learnMixture.covariances
+    })
+
     for(const dataVal of dataset) {
-        const likelihoodValues = learnMixture.predict([dataVal[0][0], -dataVal[0][1]])
+        const likelihoodValues = predictMixture.predict([dataVal[0][0], dataVal[0][1]])
         const sum = likelihoodValues[0] + likelihoodValues[1] + likelihoodValues[2]
         const color = new THREE.Color(likelihoodValues[0] / sum, likelihoodValues[1] / sum, likelihoodValues[2] / sum)
-        // const color = new THREE.Color(1 / (1 + Math.exp(dataVal[0][0])), 1 / (1 + Math.exp(dataVal[0][1])), 0)
         updatedDataset.push([dataVal[0], color])
     }
 
