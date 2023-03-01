@@ -1,0 +1,11 @@
+.option {
+    border-radius: 5px;
+}
+
+.option:hover {
+    background-color: rgb(173, 255, 255);
+}
+
+.expandedText {
+    margin-left: 10px;
+}

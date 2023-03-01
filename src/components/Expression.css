@@ -1,0 +1,16 @@
+.equation-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.label {
+    position: absolute;
+
+    font-size: small;
+    z-index: 1;
+    background-color: white;
+    color: black;
+    border: 0.5mm solid;
+}

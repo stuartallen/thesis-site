@@ -1,0 +1,32 @@
+.optionsContainer {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    
+    align-items: start;
+
+    margin: 5px;
+}
+
+.questionContainer {
+    background-color: aqua;
+    border-radius: 10px;
+    width: 75%;
+    height: fit-content;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    padding: 10px;
+    margin: 10px;
+}
+
+.visual {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    height: 300px;
+}
