@@ -8,13 +8,14 @@ import normalMixFragment from '../../shaders/fragment/normalMixTransparentFragme
 import normalMixVertex from '../../shaders/vertex/normalMixVertex.js'
 
 const NUM_POINTS = 1000
-const thetas = [0.5, 0.5, 0]
+const thetas = [0.4, 0.4, 0.2]
 
-export default function TrueCovarianceDemo() {
+export default function SingulairtyDemo() {
     const downScale = 1
     const gauss1 = gaussian(2.5, 0.0, 1.0 / downScale, 0.0/ downScale, 0.0/ downScale, 1.0/ downScale)
     const gauss2 = gaussian(-2.5, 0.0, 1.0/ downScale, -4.0/ downScale, 1.0/ downScale, 4.0/ downScale)
-    const gauss3 = gaussian(-10.0, -10.0, 1.0/ downScale, -0.9/ downScale, 0.0/ downScale, 1.0/ downScale)
+    const singularityScale = 10
+    const gauss3 = gaussian(4.5, -4.5, 1.0/ singularityScale, -0.9/ singularityScale, 0.0/ singularityScale, 1.0/ singularityScale)
 
     const { camera, gl } = useThree()
 
@@ -22,7 +23,7 @@ export default function TrueCovarianceDemo() {
     const dists = [ gauss1, gauss2, gauss3 ]
 
     let dataPositions = []
-    for(let i = 0; i < dists.length; i++) {
+    for(let i = 0; i < 2; i++) {
         const dist = dists[i]
         var mv = MultivariateNormal(dist[0], [[dist[3][0], dist[3][1]], [dist[3][2], dist[3][3]]])
 
@@ -31,6 +32,7 @@ export default function TrueCovarianceDemo() {
             dataPositions.push(sample[0], 0, -sample[1])
         }
     }
+    dataPositions.push(4.5, 0, -4.5)
     const dataPositionsArr = new Float32Array(dataPositions)
 
     return (<>
@@ -46,7 +48,7 @@ export default function TrueCovarianceDemo() {
                 <bufferAttribute 
                     attach={"attributes-position"}
                     array={dataPositionsArr}
-                    count={NUM_POINTS}
+                    count={NUM_POINTS + 1}
                     itemSize={3}
                 />
             </bufferGeometry>
@@ -74,7 +76,7 @@ export default function TrueCovarianceDemo() {
                     uMean3: {value: gauss3[0]},
                     uDeterminant3: {value: gauss3[1]},
                     uInverseCovariance3: {value: gauss3[2]},
-                    uTheta3: {value: 0.0}
+                    uTheta3: {value: thetas[2]}
                 }}
             />
         </mesh>

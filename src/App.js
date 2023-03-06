@@ -64,6 +64,13 @@ function App() {
         expandedOptions={['Correct. This option allows for covariance in the density estimator', 'Incorrect. The left cluster of the density estimator has the same covariance as the right, which is not reflected in the dataset']}
         correctness={[true, false]}
       />
+      <Question 
+        question={'Which density estimator better represents this data'}
+        visual={'singularityDemo'}
+        options={['left', 'right']}
+        expandedOptions={['Incorrect. Even if this lowers the loss of the model, outliers should not be explained away by an entirely new distribution','Correct. Even if this model has more loss it it does not overemphasize outliers']}
+        correctness={[false, true]}
+      />
       <Screen scene={"normalMix"}/>
       <Screen scene={"lineIntegral"}/>
       <Screen scene={"emVisualization"}/>

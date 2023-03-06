@@ -26,10 +26,9 @@ export default function FalseCovarianceDemo() {
         const dist = dists[i]
         var mv = MultivariateNormal(dist[0], [[dist[3][0], dist[3][1]], [dist[3][2], dist[3][3]]])
 
-        const dist1Points = []
         for(let j = 0; j < NUM_POINTS * thetas[i]; j++) {
             const sample = mv.sample()
-            dataPositions.push(sample[0], 0, sample[1])
+            dataPositions.push(sample[0], 0, -sample[1])
         }
     }
     const dataPositionsArr = new Float32Array(dataPositions)
