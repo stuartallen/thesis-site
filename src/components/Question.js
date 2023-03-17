@@ -1,18 +1,15 @@
 import { useState } from "react";
+
 import './Question.css'
 import Option from "./Option";
 import Expression from "./Expression";
-import { Canvas } from "@react-three/fiber";
-
-import TrueCovarianceDemo from "./scenes/TrueCovarianceDemo";
-import FalseCovarianceDemo from "./scenes/FalseCovarianceDemo";
-import SingularityDemo from './scenes/SingularityDemo'
-import ClusterNumberDemo from "./scenes/ClusterNumberDemo";
 import QuestionScreen from "./QuestionScreen";
 
 export default function Question({question, eqPieces, visual, options, expandedOptions, correctness}) {
     const [selected, setSelected] = useState(-1)
     const [visible, setVisible] = useState(false)
+
+    const scale = window.innerWidth < 500 ? 0.3 : window.innerWidth < 1000 ? 0.6 : 1
 
     return (<>
         <div className="questionContainer">
@@ -20,7 +17,7 @@ export default function Question({question, eqPieces, visual, options, expandedO
             <Expression pieces={eqPieces}/>
             {visual ? 
                 visual == 'kmeans' ? 
-                    <img src={'/clusters.jpg'} />
+                    <img src={'/clusters.jpg'} style={{transform: `scale(${scale})`}}/>
                 : <QuestionScreen visualName={visual} visible={visible} setVisible={setVisible}/>
             : null}
             <div className="optionsContainer">

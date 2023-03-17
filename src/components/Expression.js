@@ -1,13 +1,15 @@
 import React, { useState } from "react";
+
 import { MathComponent } from "mathjax-react";
 import './Expression.css'
 
 const Expression = ({ pieces }) => {
     const [ visibleHover, setVisibleHover] = useState(-1)
+    const scale = window.innerWidth < 500 ? 0.3 : window.innerWidth < 1000 ? 0.6 : 1
 
     return (
         <>
-            <div className="equation-container">
+            <div className="equation-container" style={{transform: `scale(${scale})`}}>
                 {Array.isArray(pieces) ? pieces.map((val, i) => (
                     <div 
                     key={i}

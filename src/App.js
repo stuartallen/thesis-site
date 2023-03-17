@@ -1,10 +1,6 @@
 import './App.css';
 import Question from './components/Question';
 
-import { Canvas } from '@react-three/fiber';
-
-//  My scripts
-
 //  My components
 import Screen from './components/Screen';
 
