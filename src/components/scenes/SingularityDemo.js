@@ -10,7 +10,7 @@ import normalMixVertex from '../../shaders/vertex/normalMixVertex.js'
 const NUM_POINTS = 1000
 const thetas = [0.4, 0.4, 0.2]
 
-export default function SingulairtyDemo() {
+export default function SingularityDemo() {
     const downScale = 1
     const gauss1 = gaussian(2.5, 0.0, 1.0 / downScale, 0.0/ downScale, 0.0/ downScale, 1.0/ downScale)
     const gauss2 = gaussian(-2.5, 0.0, 1.0/ downScale, -4.0/ downScale, 1.0/ downScale, 4.0/ downScale)

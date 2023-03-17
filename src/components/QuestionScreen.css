@@ -1,15 +1,9 @@
-.screenContainer {
-    background-color: aqua;
-    border-radius: 10px;
-    width: 75%;
-    height: 300px;
-
+.visual {
     display: flex;
-    align-items: center;
+    flex-direction: row;
     justify-content: center;
-
-    padding: 10px;
-    margin: 10px;
+    width: 100%;
+    height: 300px;
 }
 
 .stopButtonContainer {
@@ -32,4 +26,10 @@
     position: absolute;
     top: 5px;
     right: 5px;
+}
+
+.start-vis-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
