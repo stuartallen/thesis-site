@@ -17,7 +17,7 @@ const Expression = ({ pieces }) => {
                     onMouseLeave={() => setVisibleHover(-1)}
                     >
                         <MathComponent tex={val.latex}/>
-                        {visibleHover == i && val.explanation ? <div className="label">{val.explanation}</div> : null}
+                        {visibleHover === i && val.explanation ? <div className="label">{val.explanation}</div> : null}
                     </div>
                 )) : null}
             </div>

@@ -32,9 +32,6 @@ const Screen = (scene) => {
                         }
                     </Canvas>
                     <div className="stopButtonContainer">
-                        {/* <div className="stopButton" onClick={() => setVisible(false)}>
-                            <BsFillXCircleFill />
-                        </div> */}
                         <BsFillXCircleFill className="stopButton" onClick={() => setVisible(false)}/>
                     </div>
                 </>

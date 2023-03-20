@@ -33,6 +33,8 @@ function App() {
 
   return (
     <div className="App">
+      <h1>An Introduction to Gaussian Mixture Models</h1>
+      <div className='explanation'>Bingus bongus</div>
       <Question 
         question={"Given the below intuition of the Maximization step of the EM algorithm, what parameters should be updated in our case?"}
         eqPieces={equations.MaximizationStep}

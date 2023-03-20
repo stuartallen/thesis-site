@@ -14,3 +14,17 @@
 
   overflow-x: hidden;
 }
+
+h1 {
+  color: white;
+  width: 75%;
+  display: flex;
+  justify-content: center;
+}
+
+.explanation {
+  color: white;
+  width: 75%;
+  display: flex;
+  justify-content: center;
+}
