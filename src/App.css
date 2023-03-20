@@ -15,7 +15,7 @@
   overflow-x: hidden;
 }
 
-h1 {
+h1, h2, h3 {
   color: white;
   width: 75%;
   display: flex;
@@ -26,5 +26,6 @@ h1 {
   color: white;
   width: 75%;
   display: flex;
-  justify-content: center;
+  justify-content: start;
+  padding-bottom: 5px;
 }
