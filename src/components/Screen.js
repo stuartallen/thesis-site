@@ -7,34 +7,36 @@ import NormalMix from "./scenes/NormalMix";
 import LineIntegral from "./scenes/LineIntegral";
 import EMVisualization from "./scenes/EMVisualization";
 import StartVis from "./StartVis";
+import EMVisualizationWrapper from "./EMVisualizationWrapper";
 
-const Screen = (scene) => {
+const Screen = ({scene}) => {
     const [visible, setVisible] = useState(false)
 
     return (
         <>
             <div className="screenContainer">
                 {visible ? 
-                <>
-                    <Canvas
-                        camera={{
-                            position: [0, 3, 9]
-                        }}
-                    >
-                        <color attach={"background"} args={['black']}/>
-                        {scene.scene === "normalMix" ?
-                            <NormalMix /> :
-                            scene.scene === "lineIntegral" ? 
-                                <LineIntegral /> :
-                                scene.scene === "emVisualization" ? 
-                                    <EMVisualization />:
+                    scene === "emVisualization" ? 
+                        <EMVisualizationWrapper visible={visible} setVisible={setVisible}/>
+                    :
+                    <>
+                        <Canvas
+                            camera={{
+                                position: [0, 3, 9]
+                            }}
+                        >
+                            <color attach={"background"} args={['black']}/>
+                            {scene === "normalMix" ?
+                                <NormalMix /> :
+                                scene === "lineIntegral" ? 
+                                    <LineIntegral /> :
                                     null
-                        }
-                    </Canvas>
-                    <div className="stopButtonContainer">
-                        <BsFillXCircleFill className="stopButton" onClick={() => setVisible(false)}/>
-                    </div>
-                </>
+                            }
+                        </Canvas>
+                        <div className="stopButtonContainer">
+                            <BsFillXCircleFill className="stopButton" onClick={() => setVisible(false)}/>
+                        </div>
+                    </>
                 :
                 <StartVis setVisible={setVisible}/>
                 }

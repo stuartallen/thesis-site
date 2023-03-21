@@ -5,8 +5,8 @@ import normalMixVertex from '../../../shaders/vertex/normalMixVertex.js'
 import gaussian from '../../../gaussian.js'
 import { useEffect, useRef } from 'react'
 
-export default function LiveNormals({learnMixture}) {
-    const { weights, means, covariances } = learnMixture
+export default function LiveNormals({mixture}) {
+    const { weights, means, covariances } = mixture
 
     const clusters = []
     //  Yest this should be in
