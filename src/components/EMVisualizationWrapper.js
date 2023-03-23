@@ -4,10 +4,12 @@ import { Canvas } from "@react-three/fiber";
 import { randInt } from 'three/src/math/MathUtils'
 import MultivariateNormal from 'multivariate-normal'
 import * as THREE from 'three'
+import { BsFillXCircleFill } from 'react-icons/bs/index.js'
 
 import StartVis from "./StartVis";
 import EMVisualization from "./scenes/EMVisualization";
 import gaussian from "../gaussian"
+import './EMVisualizationWrapper.css'
 
 const GMM = require('gaussian-mixture-model')
 
@@ -22,12 +24,15 @@ const EMVisualizationWrapper = ({visible, setVisible}) => {
     const dists = trueDistributions()
     
     //  Dataset initialization
-    const {initDataset, dataPositions} = initialDataset(dists)
-    const datasetList = useRef([initDataset])
+    let {initDataset, dataPositions} = initialDataset(dists)
 
     //  Cluster initialization
     const initClusters = initialClusters(dataPositions)
     const mixtureList = useRef([initClusters])
+
+    const learnMixture = new GMM.GMM(mixtureList.current[0])
+    initDataset = colorsUpdate(learnMixture, initDataset)
+    const datasetList = useRef([initDataset])
 
     useEffect(() => {
         //  Set our mixture object to begin with our initial state
@@ -38,32 +43,13 @@ const EMVisualizationWrapper = ({visible, setVisible}) => {
             learnMixture.addPoint(point[0])
         }
 
-        datasetList.current = [initDataset]
-        mixtureList.current = [initClusters]
+        // datasetList.current = [colorsUpdate(learnMixture, initDataset)]
+        // mixtureList.current = [initClusters]
 
         //  Until we reach convergence
         for(let i = 0; i < 10; i++) {
-            // if(i % 2 == 0) {
-            //     learnMixture.runExpectation()
-            //     //  Push a copy of the first dataset
-            //     datasetList.current.push(initDataset)
-            //     //  Update the colors of the copy (point positions will never change)
-            //     // console.log(datasetList.current[datasetList.current.length - 1])
-            //     if(i == 2) {
-            //         updatePointColors(learnMixture, datasetList.current[datasetList.current.length - 1])
-            //     }
-            //     // updatePointColors(learnMixture, datasetList.current[datasetList.current.length - 1])
-            // } else {
-            //     learnMixture.runMaximization()
-            //     learnMixture.runCleanUp()
-            //     mixtureList.current.push({
-            //         weights: learnMixture.weights,
-            //         covariances: learnMixture.covariances,
-            //         means: learnMixture.means
-            //     })
-            // }
             learnMixture.runEM()
-            datasetList.current.push(updatePointColors(learnMixture, initDataset))
+            datasetList.current.push(colorsUpdate(learnMixture, initDataset))
             mixtureList.current.push({
                 weights: learnMixture.weights,
                 covariances: learnMixture.covariances,
@@ -72,30 +58,54 @@ const EMVisualizationWrapper = ({visible, setVisible}) => {
         }
     }, [])
 
-    console.log(datasetList)
-    console.log(mixtureList)
+    const datasetListIdx = Math.floor(stepCount / 2) 
+    const mixtureListIdx = Math.floor((stepCount + 1) / 2)
 
     return (
         <>
             {visible ? 
                 <>
-                    <BsCaretLeftFill size={100} onClick={() => setStepCount(Math.max(stepCount - 1, 0))}/>
-                    <div>{stepCount}</div>
-                    <Canvas
-                        camera={{
-                            position: [0, 3, 9]
-                        }}
-                    >
-                        <color attach={"background"} args={['black']}/>
-                        <EMVisualization dataset={datasetList.current[stepCount]} mixture={mixtureList.current[stepCount]}/>
-                    </Canvas>
-                    <BsCaretRightFill size={100} onClick={() => setStepCount(Math.min(stepCount + 1, datasetList.current.length - 1))}/>
+                    <div className="visAndControlsContainer">
+                        <div className="controls">
+                            <div className="lastStep">
+                                <div>{`Step Number: ${stepCount}`}</div>
+                                <div>{`Last Step Taken: ${stepCount % 2 == 0 ? 'Expectation Step' : 'Maximization Step'}`}</div>
+                            </div>
+                            <BsFillXCircleFill className="stopButton" onClick={() => setVisible(false)}/>
+                            <div id="arrowContainer">
+                                <BsCaretLeftFill className={`arrow  ${stepCount == 0 ? 'disabled' : null}`} size={100} onClick={() => setStepCount(Math.max(stepCount - 1, 0))}/> 
+                                <BsCaretRightFill className={`arrow ${stepCount == datasetList.current.length - 1 && datasetList.current.length != 1 ? 'disabled' : null}`} size={100} onClick={() => setStepCount(Math.min(stepCount + 1, datasetList.current.length - 1))}/>
+                            </div>
+                        </div>
+                        <Canvas
+                            camera={{
+                                position: [0, 3, 9]
+                            }}
+                        >
+                            <color attach={"background"} args={['black']}/>
+                            <EMVisualization dataset={datasetList.current[datasetListIdx]} mixture={mixtureList.current[mixtureListIdx]}/>
+                        </Canvas>
+                    </div>
                 </>
             :
                 <StartVis />
             }
         </>
     )
+}
+
+const colorsUpdate = (learnMixture, lastDataSet) => {
+    const newDataset = []
+
+    for(let i = 0; i < lastDataSet.length; i++) {
+        const likelihoodValues = learnMixture.predict([lastDataSet[i][0][0], lastDataSet[i][0][1]])
+        const sum = likelihoodValues[0] + likelihoodValues[1] + likelihoodValues[2]
+        const color = new THREE.Color(likelihoodValues[0] / sum, likelihoodValues[1] / sum, likelihoodValues[2] / sum)
+
+        newDataset.push([lastDataSet[i][0], color])
+    }
+
+    return newDataset
 }
 
 const updatePointColors = (learnMixture, points) => {
