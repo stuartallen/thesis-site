@@ -82,7 +82,7 @@ const EMVisualizationWrapper = ({visible, setVisible}) => {
                                 position: [0, 3, 9]
                             }}
                         >
-                            <color attach={"background"} args={['black']}/>
+                            <color attach={"background"} args={['#f7eedf']}/>
                             <EMVisualization dataset={datasetList.current[datasetListIdx]} mixture={mixtureList.current[mixtureListIdx]}/>
                         </Canvas>
                     </div>
