@@ -15,8 +15,8 @@ export default function LiveNormals({mixture}) {
             means[i][0], 
             -means[i][1], 
             covariances[i][0][0], 
-            covariances[i][0][1], 
-            covariances[i][1][0], 
+            -covariances[i][0][1], 
+            -covariances[i][1][0], 
             covariances[i][1][1]
         ), weights[i]])
     }
