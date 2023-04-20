@@ -25,6 +25,7 @@ export default function NormalMix() {
                 vertexShader={normalMixVertex} 
                 fragmentShader={normalMixFragment}
                 side={THREE.DoubleSide}
+                transparent={true}
                 uniforms={{
                     uMean1: {value: gauss1[0]},
                     uDeterminant1: {value: gauss1[1]},

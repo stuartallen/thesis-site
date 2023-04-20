@@ -42,7 +42,6 @@ export default function LineIntegral() {
         indices.push(i, i + 1, i + 2)
     }
     indices = new Uint32Array(indices)
-    indices = new THREE.BufferAttribute(indices)
 
     return (<>
         <orbitControls args={[camera, gl.domElement]}/>
@@ -73,15 +72,38 @@ export default function LineIntegral() {
             />
         </mesh>
         <mesh>
-            <bufferGeometry index={indices}>
+            <bufferGeometry>
                 <bufferAttribute 
                     attach={"attributes-position"}
                     array={vertices}
                     count={vertices.length / 3}
                     itemSize={3}
                 />
+                <bufferAttribute
+                    attach={"index"}
+                    array={indices}
+                    count={indices.length}
+                    itemSize={1}
+                />
             </bufferGeometry>
-            <meshBasicMaterial color={'#ff0000'} side={THREE.DoubleSide} wireframe/>
+            <meshBasicMaterial color={'#bfa1b4'} side={THREE.DoubleSide}/>
+        </mesh>
+        <mesh>
+            <bufferGeometry>
+                <bufferAttribute 
+                    attach={"attributes-position"}
+                    array={vertices}
+                    count={vertices.length / 3}
+                    itemSize={3}
+                />
+                <bufferAttribute
+                    attach={"index"}
+                    array={indices}
+                    count={indices.length}
+                    itemSize={1}
+                />
+            </bufferGeometry>
+            <meshBasicMaterial color={'#BFEBCD'} side={THREE.DoubleSide} wireframe/>
         </mesh>
     </>)
 }

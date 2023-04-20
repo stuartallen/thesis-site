@@ -24,7 +24,7 @@ const QuestionScreen = ({visualName, visible, setVisible}) => {
                             position: [0, 3, 9]
                         }}
                         >
-                            <color attach={"background"} args={['black']}/>
+                            <color attach={"background"} args={['#f7eedf']}/>
                             <TrueCovarianceDemo />
                         </Canvas> 
                         <Canvas
@@ -32,7 +32,7 @@ const QuestionScreen = ({visualName, visible, setVisible}) => {
                             position: [0, 3, 9]
                         }}
                         >
-                            <color attach={"background"} args={['black']}/>
+                            <color attach={"background"} args={['#f7eedf']}/>
                             <FalseCovarianceDemo />
                         </Canvas> 
                     </>
@@ -43,7 +43,7 @@ const QuestionScreen = ({visualName, visible, setVisible}) => {
                             position: [0, 3, 9]
                         }}
                         >
-                            <color attach={"background"} args={['black']}/>
+                            <color attach={"background"} args={['#f7eedf']}/>
                             <SingularityDemo />
                         </Canvas> 
                         <Canvas
@@ -51,7 +51,7 @@ const QuestionScreen = ({visualName, visible, setVisible}) => {
                             position: [0, 3, 9]
                         }}
                         >
-                            <color attach={"background"} args={['black']}/>
+                            <color attach={"background"} args={['#f7eedf']}/>
                             <TrueCovarianceDemo />
                         </Canvas> 
                     </>
@@ -62,7 +62,7 @@ const QuestionScreen = ({visualName, visible, setVisible}) => {
                             position: [0, 3, 9]
                         }}
                         >
-                            <color attach={"background"} args={['black']}/>
+                            <color attach={"background"} args={['#f7eedf']}/>
                             <ClusterNumberDemo />
                         </Canvas> 
                         <Canvas
@@ -70,7 +70,7 @@ const QuestionScreen = ({visualName, visible, setVisible}) => {
                             position: [0, 3, 9]
                         }}
                         >
-                            <color attach={"background"} args={['black']}/>
+                            <color attach={"background"} args={['#f7eedf']}/>
                             <TrueCovarianceDemo />
                         </Canvas> 
                     </>

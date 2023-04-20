@@ -25,7 +25,7 @@ const Screen = ({scene}) => {
                                 position: [0, 3, 9]
                             }}
                         >
-                            <color attach={"background"} args={['black']}/>
+                            <color attach={"background"} args={['#f7eedf']}/>
                             {scene === "normalMix" ?
                                 <NormalMix /> :
                                 scene === "lineIntegral" ? 
@@ -34,7 +34,7 @@ const Screen = ({scene}) => {
                             }
                         </Canvas>
                         <div className="stopButtonContainer">
-                            <BsFillXCircleFill className="stopButton" onClick={() => setVisible(false)}/>
+                            <BsFillXCircleFill className="stopButton" color="#302f2f" onClick={() => setVisible(false)}/>
                         </div>
                     </>
                 :
