@@ -15,7 +15,7 @@ export default function EMVisualization({dataset, mixture}) {
         
         <mesh rotation-x={Math.PI * -0.5} position-y={-0.1}>
             <planeGeometry args={[10, 10, 20, 20]}/>
-            <meshBasicMaterial wireframe side={THREE.DoubleSide}/>
+            <meshBasicMaterial color={'#1B1A1A'} wireframe side={THREE.DoubleSide}/>
         </mesh>
         <Datapoints dataset={dataset}/>
         <LiveNormals mixture={mixture}/>

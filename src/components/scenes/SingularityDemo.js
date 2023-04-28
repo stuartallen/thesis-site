@@ -40,7 +40,7 @@ export default function SingularityDemo() {
 
         <mesh rotation-x={Math.PI * 0.5} position-z={0.1}>
             <planeGeometry attach={"geometry"} args={[10, 10, 10, 10]}/>
-            <meshBasicMaterial color={'white'} wireframe />
+            <meshBasicMaterial color={'#1B1A1A'} wireframe />
         </mesh>
 
         <points>

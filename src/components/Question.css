@@ -9,8 +9,10 @@
 }
 
 .questionContainer {
-    background-color: aqua;
+    background-color: #f7eedf;
+    border-style: solid;
     border-radius: 10px;
+    border-width: 3px;
     width: 75%;
     height: fit-content;
 

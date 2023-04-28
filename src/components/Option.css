@@ -1,9 +1,12 @@
 .option {
     border-radius: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+    background-color: #D3D3D3;
 }
 
 .option:hover {
-    background-color: rgb(173, 255, 255);
+    background-color: #BACCE1;
 }
 
 .expandedText {

@@ -4,7 +4,7 @@
   justify-content: start;
   align-items: center;
 
-  background-color: rgb(37, 37, 37);
+  background-color: #f7eedf;
 
   position: relative;
   top: 0;
@@ -16,14 +16,14 @@
 }
 
 h1, h2, h3 {
-  color: white;
+  color: #1B1A1A;
   width: 75%;
   display: flex;
   justify-content: center;
 }
 
 .explanation {
-  color: white;
+  color: #1B1A1A;
   width: 75%;
   display: flex;
   justify-content: start;
