@@ -100,7 +100,8 @@ const colorsUpdate = (learnMixture, lastDataSet) => {
     for(let i = 0; i < lastDataSet.length; i++) {
         const likelihoodValues = learnMixture.predict([lastDataSet[i][0][0], lastDataSet[i][0][1]])
         const sum = likelihoodValues[0] + likelihoodValues[1] + likelihoodValues[2]
-        const color = new THREE.Color(likelihoodValues[0] / sum, likelihoodValues[1] / sum, likelihoodValues[2] / sum)
+        // const color = new THREE.Color(likelihoodValues[0] / sum, likelihoodValues[1] / sum, likelihoodValues[2] / sum)
+        const color = colorMix([likelihoodValues[0] / sum, likelihoodValues[1] / sum, likelihoodValues[2] / sum])
 
         newDataset.push([lastDataSet[i][0], color])
     }
@@ -108,17 +109,22 @@ const colorsUpdate = (learnMixture, lastDataSet) => {
     return newDataset
 }
 
-const updatePointColors = (learnMixture, points) => {
-    const newPoints = points
+const colorMix = (mixtureValues) => {
+    var color1 = [1.0, 1.0, 0.0]
+    var color2 = [0.0, 1.0, 1.0]
+    var color3 = [1.0, 0.0, 1.0]
 
-    for(let point of newPoints) {
-        const likelihoodValues = learnMixture.predict([point[0][0], point[0][1]])
-        const sum = likelihoodValues[0] + likelihoodValues[1] + likelihoodValues[2]
-        const color = new THREE.Color(likelihoodValues[0] / sum, likelihoodValues[1] / sum, likelihoodValues[2] / sum)
-        point[1] = color
-    }
+    var redValue =      (mixtureValues[0] * color1[0] +
+                        mixtureValues[1] * color2[0] +
+                        mixtureValues[2] * color3[0]) / 3
+    var blueValue =     (mixtureValues[0] * color1[1] +
+                        mixtureValues[1] * color2[1] +
+                        mixtureValues[2] * color3[1]) / 3
+    var greenValue =    (mixtureValues[0] * color1[2] +
+                        mixtureValues[1] * color2[2] +
+                        mixtureValues[2] * color3[2]) / 3
 
-    return newPoints
+    return new THREE.Color(redValue, blueValue, greenValue)
 }
 
 const initialClusters = (dataPositions) => {
