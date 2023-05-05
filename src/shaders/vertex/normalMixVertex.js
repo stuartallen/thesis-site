@@ -15,6 +15,7 @@ uniform mat2 uInverseCovariance3;
 uniform float uTheta3;
 
 varying float probability;
+varying vec3 vPosition;
 
 const float PI 	= 3.141592;
 const float E 	= 2.71828;
@@ -30,6 +31,7 @@ float pdf(vec2 mean, float determinant, mat2 inverseCovariance, vec2 pos) {
 
 void main() {
 	vec4 modelPosition = modelMatrix * vec4(position, 1.0);
+	vPosition = position;
 
 	probability = 	uTheta1 * pdf(uMean1, uDeterminant1, uInverseCovariance1, vec2(position.x, position.y)) +
 					uTheta2 * pdf(uMean2, uDeterminant2, uInverseCovariance2, vec2(position.x, position.y)) + 
