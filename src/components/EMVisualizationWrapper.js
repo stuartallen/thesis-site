@@ -4,9 +4,8 @@ import { Canvas } from "@react-three/fiber";
 import { randInt } from 'three/src/math/MathUtils'
 import MultivariateNormal from 'multivariate-normal'
 import * as THREE from 'three'
-import { BsFillXCircleFill } from 'react-icons/bs/index.js'
+import { BsArrowCounterclockwise } from 'react-icons/bs/index.js'
 
-import StartVis from "./StartVis";
 import EMVisualization from "./scenes/EMVisualization";
 import gaussian from "../gaussian"
 import './EMVisualizationWrapper.css'
@@ -16,25 +15,28 @@ const GMM = require('gaussian-mixture-model')
 const NUM_POINTS = 100
 const thetas = [0.3, 0.4, 0.3]
 
-const EMVisualizationWrapper = ({visible, setVisible}) => {
+const EMVisualizationWrapper = ({setNeedsLoadEMVis}) => {
+    console.log("rerunning em vis wrapper")
+
     //  This determines what step of the process the visualization is on
     const [stepCount, setStepCount] = useState(0)
 
     //  True Distribution
-    const dists = trueDistributions()
+    let dists = trueDistributions()
     
     //  Dataset initialization
     let {initDataset, dataPositions} = initialDataset(dists)
 
     //  Cluster initialization
-    const initClusters = initialClusters(dataPositions)
-    const mixtureList = useRef([initClusters])
+    let initClusters = initialClusters(dataPositions)
+    let mixtureList = useRef([initClusters])
 
-    const learnMixture = new GMM.GMM(mixtureList.current[0])
+    let learnMixture = new GMM.GMM(mixtureList.current[0])
     initDataset = colorsUpdate(learnMixture, initDataset)
-    const datasetList = useRef([initDataset])
+    let datasetList = useRef([initDataset])
 
     useEffect(() => {
+        console.log("Running use effect")
         //  Set our mixture object to begin with our initial state
         const learnMixture = new GMM.GMM(mixtureList.current[0])
         //  Add all our dataset points to the objects dataset
@@ -42,9 +44,6 @@ const EMVisualizationWrapper = ({visible, setVisible}) => {
             //  We use point[0] as the mixture has no use for color data
             learnMixture.addPoint(point[0])
         }
-
-        // datasetList.current = [colorsUpdate(learnMixture, initDataset)]
-        // mixtureList.current = [initClusters]
 
         //  Until we reach convergence
         for(let i = 0; i < 10; i++) {
@@ -61,35 +60,79 @@ const EMVisualizationWrapper = ({visible, setVisible}) => {
     const datasetListIdx = Math.floor(stepCount / 2) 
     const mixtureListIdx = Math.floor((stepCount + 1) / 2)
 
+    const reload = () => {
+        console.log("reloading")
+        setNeedsLoadEMVis(true)
+
+        // setStepCount(0)
+        // dists = trueDistributions()
+        // const initDatasetResult = initialDataset(dists)
+        // initDataset = initDatasetResult.initDataset
+        // dataPositions = initDatasetResult.dataPositions
+        // initClusters = initialClusters(dataPositions)
+
+        // console.log(mixtureList)
+        // mixtureList.current = [initClusters]
+        // console.log(mixtureList)
+        // learnMixture = new GMM.GMM(mixtureList.current[0])
+        // initDataset = colorsUpdate(learnMixture, initDataset)
+        // console.log(datasetList)
+        // datasetList.current = [initDataset]
+        // console.log(datasetList)
+
+        // for(const point of datasetList.current[0]) {
+        //     //  We use point[0] as the mixture has no use for color data
+        //     learnMixture.addPoint(point[0])
+        // }
+
+        // //  Until we reach convergence
+        // for(let i = 0; i < 10; i++) {
+        //     learnMixture.runEM()
+        //     datasetList.current.push(colorsUpdate(learnMixture, initDataset))
+        //     mixtureList.current.push({
+        //         weights: learnMixture.weights,
+        //         covariances: learnMixture.covariances,
+        //         means: learnMixture.means
+        //     })
+        // }
+
+        // console.log(mixtureList)
+        // console.log(datasetList)
+    }
+
+    const leftArrowClick = () => {
+        console.log("left arrow clicked")
+        setStepCount(Math.max(stepCount - 1, 0))
+    }
+
+    const rightArrowClick = () => {
+        console.log("right arrow clicked")
+        setStepCount(Math.min(stepCount + 1, datasetList.current.length - 1))
+    }
+
     return (
         <>
-            {visible ? 
-                <>
-                    <div className="visAndControlsContainer">
-                        <div className="controls">
-                            <div className="lastStep">
-                                <div>{`Step Number: ${stepCount}`}</div>
-                                <div>{`Last Step Taken: ${stepCount % 2 == 0 ? 'Expectation Step' : 'Maximization Step'}`}</div>
-                            </div>
-                            <BsFillXCircleFill className="stopButton" onClick={() => setVisible(false)}/>
-                            <div id="arrowContainer">
-                                <BsCaretLeftFill className={`arrow  ${stepCount == 0 ? 'disabled' : null}`} size={100} onClick={() => setStepCount(Math.max(stepCount - 1, 0))}/> 
-                                <BsCaretRightFill className={`arrow ${stepCount == datasetList.current.length - 1 && datasetList.current.length != 1 ? 'disabled' : null}`} size={100} onClick={() => setStepCount(Math.min(stepCount + 1, datasetList.current.length - 1))}/>
-                            </div>
-                        </div>
-                        <Canvas
-                            camera={{
-                                position: [0, 3, 9]
-                            }}
-                        >
-                            <color attach={"background"} args={['#f7eedf']}/>
-                            <EMVisualization dataset={datasetList.current[datasetListIdx]} mixture={mixtureList.current[mixtureListIdx]}/>
-                        </Canvas>
+            <div className="visAndControlsContainer">
+                <div className="controls">
+                    <div className="lastStep">
+                        <div>{`Step Number: ${stepCount}`}</div>
+                        <div>{`Last Step Taken: ${stepCount % 2 == 0 ? 'Expectation Step' : 'Maximization Step'}`}</div>
                     </div>
-                </>
-            :
-                <StartVis />
-            }
+                    <BsArrowCounterclockwise className="stopButton" onClick={reload}/>
+                    <div id="arrowContainer">
+                        <BsCaretLeftFill className={`arrow  ${stepCount == 0 ? 'disabled' : null}`} size={100} onClick={leftArrowClick}/> 
+                        <BsCaretRightFill className={`arrow ${stepCount == datasetList.current.length - 1 && datasetList.current.length != 1 ? 'disabled' : null}`} size={100} onClick={rightArrowClick}/>
+                    </div>
+                </div>
+                <Canvas
+                    camera={{
+                        position: [0, 3, 9]
+                    }}
+                >
+                    <color attach={"background"} args={['#f7eedf']}/>
+                    <EMVisualization dataset={datasetList.current[datasetListIdx]} mixture={mixtureList.current[mixtureListIdx]}/>
+                </Canvas>
+            </div>
         </>
     )
 }

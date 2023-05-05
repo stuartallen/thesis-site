@@ -1,7 +1,5 @@
 import React from "react"
 import './QuestionScreen.css'
-import StartVis from "./StartVis"
-import { BsFillXCircleFill } from "react-icons/bs";
 import { Canvas } from "@react-three/fiber";
 
 import TrueCovarianceDemo from "./scenes/TrueCovarianceDemo";
@@ -13,11 +11,7 @@ const QuestionScreen = ({visualName, visible, setVisible}) => {
     return (
         <>
             <div className="visual">
-                {!visible ? 
-                    <div className="start-vis-container">
-                        <StartVis setVisible={setVisible}/>
-                    </div>
-                : visualName === 'covarianceDemo' ?
+                {visualName === 'covarianceDemo' ?
                     <>
                         <Canvas
                         camera={{
@@ -74,11 +68,6 @@ const QuestionScreen = ({visualName, visible, setVisible}) => {
                             <TrueCovarianceDemo />
                         </Canvas> 
                     </>
-                : null}
-                {visible ? 
-                    <div className="stopButtonContainer">
-                        <BsFillXCircleFill className="stopButton" onClick={() => setVisible(false)}/>
-                    </div>
                 : null}
             </div>
         </>
