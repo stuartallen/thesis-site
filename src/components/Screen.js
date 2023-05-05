@@ -5,6 +5,7 @@ import { Canvas } from "@react-three/fiber";
 import NormalMix from "./scenes/NormalMix";
 import LineIntegral from "./scenes/LineIntegral";
 import EMVisualizationWrapper from "./EMVisualizationWrapper";
+import SingleGaussian from "./scenes/SingleGaussian";
 
 const Screen = ({scene}) => {
     const [needsLoadEMVis, setNeedsLoadEMVis] = useState(false)
@@ -36,7 +37,11 @@ const Screen = ({scene}) => {
                                 <NormalMix /> :
                                 scene === "lineIntegral" ? 
                                     <LineIntegral /> :
-                                    null
+                                        scene === "singleGaussian" ? 
+                                            <SingleGaussian covariance={[1.0, 0.0, 0.0, 1.0]} /> : 
+                                                scene === "singleGaussianDiagonal" ? 
+                                                    <SingleGaussian covariance={[4.0, -1.0, 2.0, 3.0]} />
+                                                    : null
                             }
                         </Canvas>
                     </>}

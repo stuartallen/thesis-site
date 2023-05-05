@@ -40,14 +40,14 @@ function App() {
         with our trails, as well as the coordinates of every recent mountain lion sighting. Our goal is to choose the trail where we are least
         likely to find a mountain lion.
       </div>
-      {/** TODO: Insert a picture of a map of mountain lion sightings */}
+      <img src='firstExample.png' alt='An Image of Two Hiking Paths with Cougar Siting' />
       <div className='explanation'>
         How might we approach this problem? In some cases it may be trivial if sightings are clearly localized around a certain path. However,
         this will not always be the case. For example, suppose one path is much longer than another, and the shorter path goes directly through
         a cluster of sightings. While it's best to avoid going directly through a cluster of sightings, a longer path presents more opportunities
         to meet these creatures as well. How can we make a decision about which path to choose in these less than obvious situations?
       </div>
-      {/** TODO: Insert a picture of two trivial cases and a less trivial case, better yet ask which case is not trivial */}
+      <img src='inconclusive1.png' alt='Another Image of Two Hiking Paths with Cougar Siting' />
       <div className='explanation'>
         What if we could approximate the relative likelihood of seeing a mountain lion at any point on our map? With that information we could take the sum of these
         relative likelihoods at each point along a path. This would give us a total probability of seeing a mountain lion for a certain path. Then we could
@@ -62,29 +62,28 @@ function App() {
       <div className='explanation'>
         Gaussian distributions are also known as normal distributions, as well as Bell curves. This kind of distribution has two important parameters:
         mean and variance. The mean of a distribution describes the point at where the highest values of the function are centered around, the variance
-        describes how spread out the values of the function are. Observe the following distributions:
-        {/** TODO: Insert a picture of different normal distributions */}
+        describes how spread out the values of the function are. Use the below graphing editor to experiment with the parameters.
       </div>
+      <iframe src="https://www.desmos.com/calculator/nex629j6ff" width="500" height="500" ></iframe>
       <div className='explanation'>
         You have likely seen this kind of distribution before, however, you may not have seen a multivariate gaussian distribution. A multivariate gaussian
         distribution has many similarities to its one dimensional counterpart. It has a mean where most of the highest values of the function are centered
         around, as well as a covariance matrix that describes how spread the values of the function are.
-        {/** TODO: Insert two visualization of multivariate normals */}
       </div>
+      <Screen scene={"singleGaussian"}/>
       <div className='explanation'>
         Mutlidimensional gaussian distributions also have covariance properties. This means the spread of the function may be mostly circular, coincide with
-        an axis, or diagonal
-        {/** TODO: Insert a straight and diagonal multivariate normal */}
-        The flexibility of multivariate gaussian distribution's mean and covariance parameters makes them useful to our problem. For example, the sightings
+        an axis, or diagonal. The flexibility of multivariate gaussian distribution's mean and covariance parameters makes them useful to our problem. For example, the sightings
         of one particular mountain lion on a map may well follow a distribution like this.
       </div>
+      <Screen scene={"singleGaussianDiagonal"}/>
       <div className='explanation'>
         If the sightings of one mountain lion follow a multivariate gaussian distribution, perhaps a mixture of these distributions can describe the
         sighting activity of several. A mixture of gaussians can be made from a weighted sum of two or more distributions. Applying a weight to each
         individual sum is necessary as the sum of all values in a probability distribution must add to 100%. However, this is more of an advantage as it
         lets our mixed distribution have even more flexibility to represent data. Observe a gaussian mixture in the one dimensional case:
-        {/** TODO: Insert two pictures of a one dimensional gaussian mixture, one with equal weight, and one with uneven weight */}
-        </div>
+      </div>
+      <iframe src="https://www.desmos.com/calculator/92jdxkbomr" width="500" height="500" ></iframe>
       <div className='explanation'>
         As well as a multivariate gaussian mixture:
       </div>

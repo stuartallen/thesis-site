@@ -76,7 +76,7 @@ const EMVisualizationWrapper = ({setNeedsLoadEMVis}) => {
                 <div className="controls">
                     <div className="lastStep">
                         <div>{`Step Number: ${stepCount}`}</div>
-                        <div>{`Last Step Taken: ${stepCount % 2 == 0 ? 'Expectation Step' : 'Maximization Step'}`}</div>
+                        <div>{`Last Step Taken: ${stepCount === 0 ? 'None' : stepCount % 2 === 0 ? 'Expectation Step' : 'Maximization Step'}`}</div>
                     </div>
                     <BsArrowCounterclockwise className="stopButton" onClick={reload}/>
                     <div id="arrowContainer">
