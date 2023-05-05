@@ -1,7 +1,8 @@
 .optionsContainer {
     display: flex;
     flex-direction: column;
-    width: 200px;
+    width: fit-content;
+    max-width: 400px;
     
     align-items: start;
 
