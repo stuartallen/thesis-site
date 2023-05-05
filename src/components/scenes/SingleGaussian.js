@@ -9,10 +9,10 @@ import gaussian from '../../gaussian.js'
 
 extend({OrbitControls})
 
-export default function NormalMix() {
-    const gauss1 = gaussian(0.0, 2.0, 1.0, 0.0, 0.0, 1.0)
-    const gauss2 = gaussian(2.0, -2.0, 2.0, -1.0, 2.0, 1.0)
-    const gauss3 = gaussian(-3.0, -2.0, 1.0, -0.9, 0.0, 1.0)
+export default function SingleGaussian({covariance}) {
+    const gauss1 = gaussian(0.0, 0.0, covariance[0], covariance[1], covariance[2], covariance[3])
+    const gauss2 = gaussian(100.0, 100.0, 2.0, -1.0, 2.0, 1.0)
+    const gauss3 = gaussian(100.0, 100.0, 1.0, -0.9, 0.0, 1.0)
 
     const { camera, gl } = useThree()
 
@@ -30,7 +30,7 @@ export default function NormalMix() {
                     uMean1: {value: gauss1[0]},
                     uDeterminant1: {value: gauss1[1]},
                     uInverseCovariance1: {value: gauss1[2]},
-                    uTheta1: {value: 0.1},
+                    uTheta1: {value: 1.0},
 
                     uMean2: {value: gauss2[0]},
                     uDeterminant2: {value: gauss2[1]},

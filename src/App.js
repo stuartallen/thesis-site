@@ -40,44 +40,63 @@ function App() {
         with our trails, as well as the coordinates of every recent mountain lion sighting. Our goal is to choose the trail where we are least
         likely to find a mountain lion.
       </div>
+      <img className='outerImg' src='firstExample.png' alt='An Image of Two Hiking Paths with Cougar Siting' />
       <div className='explanation'>
         How might we approach this problem? In some cases it may be trivial if sightings are clearly localized around a certain path. However,
         this will not always be the case. For example, suppose one path is much longer than another, and the shorter path goes directly through
-        a cluster of sightings. While its best to avoid going directly through a cluster of sightings, a longer path presents more opportunities
+        a cluster of sightings. While it's best to avoid going directly through a cluster of sightings, a longer path presents more opportunities
         to meet these creatures as well. How can we make a decision about which path to choose in these less than obvious situations?
       </div>
+      <img className='outerImg' src='inconclusive1.png' alt='Another Image of Two Hiking Paths with Cougar Siting' />
       <div className='explanation'>
-        In order to find which path is safest, we must analyze the probability density of finding a mountain lion at all possible locations along a route.
-        We can use the line integral over a probability density estimator of the region to find a probability of seeing a mountain lion on this route. It is simple to approximate this
-        line integral by splitting each path into points evenly distributed across a route, computing the height of the gaussian mixture at each
-        point, and finally finding the sum of all the areas of trapezoids from adjacent points. Below is an interactive visualization that shows how the area under a path for some density estimation function.
+        What if we could approximate the relative likelihood of seeing a mountain lion at any point on our map? With that information we could take the sum of these
+        relative likelihoods at each point along a path. This would give us a total probability of seeing a mountain lion for a certain path. Then we could
+        simply compare these total probabilities for each path to see which one is best!
+      </div>
+      <div className='explanation'>
+        But how is it possible to transform a set of sightings into a probability of seeing a mountain lion at any point in our map? This can be
+        accomplished with Gaussian Mixture Models.
       </div>
 
-      <Screen scene={"lineIntegral"}/>
-
-      <h3>Gaussian Mixtures as Density Estimators</h3>
+      <h3>Understanding Gaussian Mixtures</h3>
       <div className='explanation'>
-        A gaussian mixture is the weighted sum of multiple gaussian distributions. Gaussian distributions are also known as normal distributions,
-        as well as Bell curves. The important aspect for our purpose is for each distribution, the majority of the value is centered about some
-        mean. Adding multiple gaussian distributions together creates a density function where the majority of the data is most likely to be 
-        centered around multiple means. Each distribution must be weighted when combining to form a density estimator so the entire area under
-        the density estimator sums to 1. Distributions can be weighted evenly, but we will allow for uneven weights to allow the density estimator
-        to reflect that data may be more likely to come from one distribution over another.
+        Gaussian distributions are also known as normal distributions, as well as Bell curves. This kind of distribution has two important parameters:
+        mean and variance. The mean of a distribution describes the point at where the highest values of the function are centered around, the variance
+        describes how spread out the values of the function are. Use the below graphing editor to experiment with the parameters.
       </div>
+      <iframe src="https://www.desmos.com/calculator/nex629j6ff" width="500" height="500" ></iframe>
       <div className='explanation'>
-        As our problem attempts to build a density estimator over a two dimensional field with two dimensional data, we require a two dimensional
-        normal distribution. Multivariate normal distributions are similar to single dimensional normal distributions as values near the mean are
-        most likely. The only difference is an input value is of two or more dimensions. Multivariate normal distributions
-        can also account for covariance. While a one dimensional normal distribution can only control how thin it is with its variance, a multivariate
-        normal distribution has a covariance given by a square matrix with as many rows and columns as there are dimensions in the space. In the two
-        dimensional case this means a normal distribution can be circular, longer in one direction or another, or at some diagonal. A two dimensional 
-        gaussian mixture can be constructed from two dimensional normal distributions in the same manner as the one dimensional case.
+        You have likely seen this kind of distribution before, however, you may not have seen a multivariate gaussian distribution. A multivariate gaussian
+        distribution has many similarities to its one dimensional counterpart. It has a mean where most of the highest values of the function are centered
+        around, as well as a covariance matrix that describes how spread the values of the function are.
       </div>
+      <Screen scene={"singleGaussian"}/>
       <div className='explanation'>
-        Below is a visualization of a two dimensional gaussian mixture.
+        Mutlidimensional gaussian distributions also have covariance properties. This means the spread of the function may be mostly circular, coincide with
+        an axis, or diagonal. The flexibility of multivariate gaussian distribution's mean and covariance parameters makes them useful to our problem. For example, the sightings
+        of one particular mountain lion on a map may well follow a distribution like this.
+      </div>
+      <Screen scene={"singleGaussianDiagonal"}/>
+      <div className='explanation'>
+        If the sightings of one mountain lion follow a multivariate gaussian distribution, perhaps a mixture of these distributions can describe the
+        sighting activity of several. A mixture of gaussians can be made from a weighted sum of two or more distributions. Applying a weight to each
+        individual sum is necessary as the sum of all values in a probability distribution must add to 100%. However, this is more of an advantage as it
+        lets our mixed distribution have even more flexibility to represent data. Observe a gaussian mixture in the one dimensional case:
+      </div>
+      <iframe src="https://www.desmos.com/calculator/92jdxkbomr" width="500" height="500" ></iframe>
+      <div className='explanation'>
+        As well as a multivariate gaussian mixture:
       </div>
       <Screen scene={"normalMix"}/>
 
+      <div className='explanation'>
+        Univaraite and multivariate, mixture and single gaussian distributions can also be called density estimators. Meaning they describe the density
+        of the probability around some input. It is more common to call multivariate gaussian mixtures density estimators as they are far more flexible
+        than the other aforementioned distributions. We will use multivariate gaussian mixtures to find a good density estimator of the likelihood of seeing
+        a mountain lion at each point on the map.
+      </div>
+
+      <h3>Check your Understanding</h3>
       <div className='explanation'>
         The following questions contain visualizations of normal distributions and data in a plane. Given what you've just learned about gaussian
         mixtures, answer the following questions:
@@ -105,16 +124,34 @@ function App() {
         correctness={[false, true]}
       />
 
+      <h3>Finding The Probability Of A Sighting Along A Path, Line Integrals Along A Gaussain Mixture</h3>
+      <div className='explanation'>
+        Now that we understand the kind of distribution our mountain lions sightings would follow, we can now find the probability of seeing a mountain
+        lion on our observed path. We deduced earlier that if we take the sum of all the probabilities along one path, we would know the total probability
+        of seeing a mountain lion along that path. This can be accomplished by what is called a line integral. A line integral more generally is the sum of 
+        all the points under a multidimensional function along a line. Our multidimensional function is our multivariate gaussian mixture. This kind of 
+        distribution is difficult to calculate an exact line integral over. However, we can construct an approximation by splitting our line and the area 
+        underneath into trapezoids. This more generally known as a Reimann sum approximation. Below is a visualization of the an approximate line integral
+        over a gaussian mixture:
+      </div>
+      <Screen scene={"lineIntegral"}/>
+
+      <div className='explanation'>
+        Now we know what kind of distribution can approximate the likelihood of seeing a mountain lion on our map, as well as use that information to 
+        find the probability of seeing a mountain lion on a certain path. All we need to know now is how to learn what multivariate gaussian distribution
+        fits the sightings on our map best.
+      </div>
+
       <h3>The Derivative Log Problem, Why Gaussian Mixtures Cannot Be Learned Directly</h3>
 
       <div className='explanation'>
         As we are only given the location of mountain lion sightings, we must find a gaussian mixture that best represents this data in order to
         build our density estimator. A typical method of learning the parameters of our gaussian mixture is Maximum likelihood Estimation
-        (MLE). Many machine learning problems can be solved through direct maximizing the log-likelihood expression. If our data is independent, the likelihood function of our
-        data is a product of the likelihood of each data point given our distribution parameters. The log-likelihood is a useful expression as it is a 
+        (MLE). Many machine learning problems can be solved through directly maximizing the log-likelihood expression. If our data is independent, meaning one mountain lion sighting does not influence another, the likelihood function of our
+        data is a product of the likelihood of each data point given our distribution parameters: the mean and covariance. The log-likelihood is a useful expression as it is a 
         monotonic function and therefore retains the same local and global maximums and minimums. Additionally, the log likelihood of a product usually reduces 
-        to a sum which usually leads to a drastically simpler expression when applying the derivative operator with respect to one of a model’s parameters. In 
-        many cases such as linear regression, a closed form solution is possible. Answer the following question to observe why this is not the case for us.
+        to a sum which leads to a drastically simpler expression when applying the derivative operator with respect to one of a model’s parameters. In 
+        many cases such as linear regression, a closed form solution is possible. Answer the following question to observe why this is not the case for optimizing gaussian mixture models.
       </div>
 
       <Question 
@@ -134,23 +171,36 @@ function App() {
       />
 
       <div className='explanation'>
-        In the case of directly optimizing gaussian mixture models our log-likelihood function yields a summation dependent on every parameter within a log. A 
+        In the case of directly optimizing gaussian mixture models our log-likelihood function yields a summation dependent on every parameter within a logarithm. A 
         summation inside of a log is not as easily separable as a product. Our optimization then leads to not only a system of nonlinear equations, but also 
-        has no closed form solution. This drives us to use a method of coordinate descent called the Expectation Maximization algorithm.
+        has no closed form solution. This means we cannot build the best density estimator as some operation of our dataset nor can we know the best gaussian mixture that 
+        predicts the probability of seeing a mountain lion over our whole map. This drives us to use a method of coordinate descent called the Expectation Maximization algorithm.
       </div>
 
       <h3>The Expectation Maximization Algorithm</h3>
       <div className='explanation'>
         We have shown why it is impossible to directly optimize Gaussian Mixtures with MLE, however, we can use the Expectation Maximization (EM) algorithm to 
-        solve this problem. The EM algorithm is a form of coordinate descent, meaning that we update all our parameters, but we hold some constant when optimizing 
-        others. In general, expectation maximization holds parameters for a target distribution constant, when trying to learn another latent variable, then vice 
-        versa. The EM algorithm is guaranteed to reach a local solution after repeatedly taking turns optimizing the latent variables and distribution parameters.
+        solve this problem. The EM algorithm in general is a form of coordinate descent, meaning that we update some of a problem's parameters, but we hold others constant. 
+        In general, expectation maximization holds parameters for a target distribution constant, when trying to learn another latent variable, then vice 
+        versa. The EM algorithm is guaranteed to reach a local solution after repeatedly taking turns optimizing the latent variables and other parameters.
       </div>
       <div className='explanation'>
-        To fit the EM algorithm to the problem of optimizing Gaussian Mixtures, it is important to make the realization that the cluster assignments per data point 
-        are trivial to calculate given the parameters of the different distributions and vice versa. This means with an initial set of parameters we can make an inference 
-        of our latent variable: the partial assignment of each data. The partial assignments then allow us to create an update for each individual normal distribution's mean, 
-        covariance, and partial assignment. As aforementioned, this process can continue until a local solution is achieved. A local solution does not guarantee a great 
+        In order to take advantage of the Expectation Maximization algorithm, we must introduce our latent variable. Suppose we have a gaussian mixture with 3 individual 
+        gaussians as the density estimator of the likelihood of seeing mountain lion at each point on the map. Our latent variable will be the likelihood that each individual sighting
+        was created by an individual distribution. For example one particular sighting can have a 20% likelihood of coming from the first individual normal distribution, 30% for the
+        second, and 50% for the third. These probabilities will always add up to 100%.
+      </div>
+      {/* <div className='explanation'>
+        To fit the EM algorithm to the problem of optimizing Gaussian Mixtures, it is important to make the realization that given the initial distribution parameters of our
+        guassian mixture, it is trivial to find the probability assignment for each data point. When the expectation
+      </div> */}
+      <div className='explanation'>
+        To fit the EM algorithm to the problem of optimizing Gaussian Mixtures, it is important to make the realization that the cluster assignments for each data point 
+        are trivial to calculate given the parameters of the different distributions and vice versa. This means with an initial set of distribution parameters for our gaussian mixture 
+        we can make an inference of our latent variable: the partial assignment of each data. The partial assignments then allows us to create an update for each individual normal distribution's mean, 
+        covariance, and partial assignment.
+      </div>
+      <div className='explanation'>As aforementioned, this process can continue until a local solution is achieved. A local solution does not guarantee a great 
         solution and it is therefore worth running the algorithm with different initializations. Different initializations for Gaussian Mixtures will be discussed later 
         in this article.
       </div>

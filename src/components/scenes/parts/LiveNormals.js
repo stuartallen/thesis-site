@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 
-import normalMixGradientFragment from '../../../shaders/fragment/normalMixGradientFragment.js'
+import emVisFragment from '../../../shaders/fragment/emVisFragment.js'
 import normalMixVertex from '../../../shaders/vertex/normalMixVertex.js'
 import gaussian from '../../../gaussian.js'
 import { useEffect, useRef } from 'react'
@@ -23,7 +23,7 @@ export default function LiveNormals({mixture}) {
 
     const normalsMaterial = useRef(new THREE.ShaderMaterial({
         vertexShader: normalMixVertex,
-        fragmentShader: normalMixGradientFragment,
+        fragmentShader: emVisFragment,
         side: THREE.DoubleSide,
         transparent: true,
         uniforms: {

@@ -4,7 +4,7 @@ export default function Option({text, expanded, expandedText, correctness, setSe
     return (<>
         <div onClick={setSelected} className="option" style={expanded ? {backgroundColor: `${correctness ? '#BFEBCD' : '#BFA1B4'}`}: {}}>
             {text}
-            {expanded ? <div>{expandedText}</div> : null}
+            {expanded ? <div className='expandedText'>{expandedText}</div> : null}
         </div>
     </>)
 }

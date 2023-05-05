@@ -1,23 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Screen.css"
 import { Canvas } from "@react-three/fiber";
-import { BsFillCCircleFill, BsFillXCircleFill } from 'react-icons/bs/index.js'
 
 import NormalMix from "./scenes/NormalMix";
 import LineIntegral from "./scenes/LineIntegral";
-import EMVisualization from "./scenes/EMVisualization";
-import StartVis from "./StartVis";
 import EMVisualizationWrapper from "./EMVisualizationWrapper";
+import SingleGaussian from "./scenes/SingleGaussian";
 
 const Screen = ({scene}) => {
-    const [visible, setVisible] = useState(false)
+    const [needsLoadEMVis, setNeedsLoadEMVis] = useState(false)
+
+    const Loading = () => {
+        useEffect(() => setNeedsLoadEMVis(false), [])
+
+        return (
+            <div>Reloading...</div>
+        )
+    }
 
     return (
         <>
             <div className="screenContainer">
-                {visible ? 
-                    scene === "emVisualization" ? 
-                        <EMVisualizationWrapper visible={visible} setVisible={setVisible}/>
+                    {scene === "emVisualization" ? 
+                        needsLoadEMVis ? 
+                            <Loading /> :
+                            <EMVisualizationWrapper setNeedsLoadEMVis={setNeedsLoadEMVis}/>
                     :
                     <>
                         <Canvas
@@ -30,16 +37,14 @@ const Screen = ({scene}) => {
                                 <NormalMix /> :
                                 scene === "lineIntegral" ? 
                                     <LineIntegral /> :
-                                    null
+                                        scene === "singleGaussian" ? 
+                                            <SingleGaussian covariance={[1.0, 0.0, 0.0, 1.0]} /> : 
+                                                scene === "singleGaussianDiagonal" ? 
+                                                    <SingleGaussian covariance={[4.0, -1.0, 2.0, 3.0]} />
+                                                    : null
                             }
                         </Canvas>
-                        <div className="stopButtonContainer">
-                            <BsFillXCircleFill className="stopButton" color="#302f2f" onClick={() => setVisible(false)}/>
-                        </div>
-                    </>
-                :
-                <StartVis setVisible={setVisible}/>
-                }
+                    </>}
             </div>
         </>
     )
