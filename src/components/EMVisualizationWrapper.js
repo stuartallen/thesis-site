@@ -16,7 +16,6 @@ const NUM_POINTS = 100
 const thetas = [0.3, 0.4, 0.3]
 
 const EMVisualizationWrapper = ({setNeedsLoadEMVis}) => {
-    console.log("rerunning em vis wrapper")
 
     //  This determines what step of the process the visualization is on
     const [stepCount, setStepCount] = useState(0)
@@ -36,7 +35,6 @@ const EMVisualizationWrapper = ({setNeedsLoadEMVis}) => {
     let datasetList = useRef([initDataset])
 
     useEffect(() => {
-        console.log("Running use effect")
         //  Set our mixture object to begin with our initial state
         const learnMixture = new GMM.GMM(mixtureList.current[0])
         //  Add all our dataset points to the objects dataset
@@ -61,52 +59,14 @@ const EMVisualizationWrapper = ({setNeedsLoadEMVis}) => {
     const mixtureListIdx = Math.floor((stepCount + 1) / 2)
 
     const reload = () => {
-        console.log("reloading")
         setNeedsLoadEMVis(true)
-
-        // setStepCount(0)
-        // dists = trueDistributions()
-        // const initDatasetResult = initialDataset(dists)
-        // initDataset = initDatasetResult.initDataset
-        // dataPositions = initDatasetResult.dataPositions
-        // initClusters = initialClusters(dataPositions)
-
-        // console.log(mixtureList)
-        // mixtureList.current = [initClusters]
-        // console.log(mixtureList)
-        // learnMixture = new GMM.GMM(mixtureList.current[0])
-        // initDataset = colorsUpdate(learnMixture, initDataset)
-        // console.log(datasetList)
-        // datasetList.current = [initDataset]
-        // console.log(datasetList)
-
-        // for(const point of datasetList.current[0]) {
-        //     //  We use point[0] as the mixture has no use for color data
-        //     learnMixture.addPoint(point[0])
-        // }
-
-        // //  Until we reach convergence
-        // for(let i = 0; i < 10; i++) {
-        //     learnMixture.runEM()
-        //     datasetList.current.push(colorsUpdate(learnMixture, initDataset))
-        //     mixtureList.current.push({
-        //         weights: learnMixture.weights,
-        //         covariances: learnMixture.covariances,
-        //         means: learnMixture.means
-        //     })
-        // }
-
-        // console.log(mixtureList)
-        // console.log(datasetList)
     }
 
     const leftArrowClick = () => {
-        console.log("left arrow clicked")
         setStepCount(Math.max(stepCount - 1, 0))
     }
 
     const rightArrowClick = () => {
-        console.log("right arrow clicked")
         setStepCount(Math.min(stepCount + 1, datasetList.current.length - 1))
     }
 
