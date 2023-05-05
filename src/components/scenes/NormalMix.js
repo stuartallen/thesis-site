@@ -30,17 +30,17 @@ export default function NormalMix() {
                     uMean1: {value: gauss1[0]},
                     uDeterminant1: {value: gauss1[1]},
                     uInverseCovariance1: {value: gauss1[2]},
-                    uTheta1: {value: 0.3},
+                    uTheta1: {value: 0.1},
 
                     uMean2: {value: gauss2[0]},
                     uDeterminant2: {value: gauss2[1]},
                     uInverseCovariance2: {value: gauss2[2]},
-                    uTheta2: {value: 0.4},
+                    uTheta2: {value: 0.5},
 
                     uMean3: {value: gauss3[0]},
                     uDeterminant3: {value: gauss3[1]},
                     uInverseCovariance3: {value: gauss3[2]},
-                    uTheta3: {value: 0.3}
+                    uTheta3: {value: 0.4}
                 }}
             />
         </mesh>
