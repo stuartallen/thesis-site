@@ -190,45 +190,11 @@ function App() {
         was created by an individual distribution. For example one particular sighting can have a 20% likelihood of coming from the first individual normal distribution, 30% for the
         second, and 50% for the third. These probabilities will always add up to 100%.
       </div>
-      {/* <div className='explanation'>
+      <div className='explanation'>
         To fit the EM algorithm to the problem of optimizing Gaussian Mixtures, it is important to make the realization that given the initial distribution parameters of our
-        guassian mixture, it is trivial to find the probability assignment for each data point. When the expectation
-      </div> */}
-      <div className='explanation'>
-        To fit the EM algorithm to the problem of optimizing Gaussian Mixtures, it is important to make the realization that the cluster assignments for each data point 
-        are trivial to calculate given the parameters of the different distributions and vice versa. This means with an initial set of distribution parameters for our gaussian mixture 
-        we can make an inference of our latent variable: the partial assignment of each data. The partial assignments then allows us to create an update for each individual normal distribution's mean, 
-        covariance, and partial assignment.
+        guassian mixture, it is trivial to find the probability assignment for each data point. Each index of our probability assignment is the value of the corresponding individual
+        distribution divided by the total of all the distributions. This is known as the expectation step.
       </div>
-      <div className='explanation'>As aforementioned, this process can continue until a local solution is achieved. A local solution does not guarantee a great 
-        solution and it is therefore worth running the algorithm with different initializations. Different initializations for Gaussian Mixtures will be discussed later 
-        in this article.
-      </div>
-      <div className='explanation'>
-        Experiment with this visualization of the EM algorithm to ensure you understand:
-      </div>
-
-      <Screen scene={"emVisualization"}/>
-      
-      <div className='explanation'>
-        Given this overview of the EM algorithm, answer the following questions about how it applies to our case specifically:
-      </div>
-
-      <Question 
-        question={"Given the below intuition of the Maximization step of the EM algorithm, what parameters should be updated in our case?"}
-        eqPieces={equations.MaximizationStep}
-        options={[
-          'The mean, covariance, and probability assignment of each cluster', 
-          'The mean and covariance of each cluster and the likelihoods of each point', 
-          'The likelihoods of each point'
-        ]}
-        expandedOptions={[
-          'Correct, the mean and covariance correspond to the distribution we are trying to learn', 
-          'Incorrect. The likelihoods of each point correspond to our missing data which should not be updated at this step',
-          'Incorrect. The likelihoods of each point correspond to our missing data which should not be updated at this step'
-        ]}
-        correctness={[true, false, false]}
-      />
       <Question 
         question={'Given the below intuition of the Expectation step of the EM algorithm, what parameters should be updated in our case'}
         eqPieces={equations.ExpectationStep}
@@ -244,6 +210,39 @@ function App() {
         ]}
         correctness={[false, false, true]}
       />
+
+      <div className='explanation'>
+        We must also make the realization that it is trivial to calculate an update of our guassian mixtures' distribution parameters given our probability assignments. The weight assosciated
+        with a single distribution can be calculated as the mean probability assignment for that point. The mean for a single distribution can be calculated by taking a weighted average of
+        our sighting positions in relation to the probability assignment for that specific distribution at each point. The covariance matrix can be calculated in much the same way, as a weighted
+        sum of the difference between each sighting position and the single distributions mean, in relation to the probability assignment of that point.
+      </div>
+      
+      <Question 
+        question={"Given the below intuition of the Maximization step of the EM algorithm, what parameters should be updated in our case?"}
+        eqPieces={equations.MaximizationStep}
+        options={[
+          'The mean, covariance, and probability assignment of each cluster', 
+          'The mean and covariance of each cluster and the likelihoods of each point', 
+          'The likelihoods of each point'
+        ]}
+        expandedOptions={[
+          'Correct, the mean and covariance correspond to the distribution we are trying to learn', 
+          'Incorrect. The likelihoods of each point correspond to our missing data which should not be updated at this step',
+          'Incorrect. The likelihoods of each point correspond to our missing data which should not be updated at this step'
+        ]}
+        correctness={[true, false, false]}
+      />
+      
+      <div className='explanation'>As aforementioned, this process can continue until a local solution is achieved. A local solution does not guarantee a great 
+        solution and it is therefore worth running the algorithm with different initializations. Different initializations for Gaussian Mixtures will be discussed later 
+        in this article.
+      </div>
+      <div className='explanation'>
+        Experiment with this visualization of the EM algorithm to ensure you understand:
+      </div>
+
+      <Screen scene={"emVisualization"}/>    
 
       <h3>Solving for the Best Path</h3>
 
