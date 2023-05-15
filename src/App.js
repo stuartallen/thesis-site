@@ -106,7 +106,7 @@ function App() {
         question={'Which density estimator better represents this data'}
         visual={'covarianceDemo'}
         options={['Left','Right']}
-        expandedOptions={['Correct. This option allows for covariance in the density estimator', 'Incorrect. The left cluster of the density estimator has the same covariance as the right, which is not reflected in the dataset']}
+        expandedOptions={['Correct. This option allows for non-circular distributions in the density estimator', 'Incorrect. The left cluster of the density estimator has the same covariance as the right, which is not reflected in the dataset']}
         correctness={[true, false]}
       />
       <Question 

@@ -86,7 +86,7 @@ export default function LineIntegral() {
                     itemSize={1}
                 />
             </bufferGeometry>
-            <meshBasicMaterial color={'#bfa1b4'} side={THREE.DoubleSide}/>
+            <meshBasicMaterial color={'green'/*'#bfa1b4'*/} side={THREE.DoubleSide}/>
         </mesh>
         <mesh>
             <bufferGeometry>
