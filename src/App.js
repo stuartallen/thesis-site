@@ -1,9 +1,11 @@
+import { useEffect } from 'react';
 import './App.css';
 import EMVWrapper from './components/EMVWrapper';
 import Question from './components/Question';
 
 //  My components
 import Screen from './components/Screen';
+import useColor from './hooks/useColor';
 
 //  Equation data
 const equations = {
@@ -32,8 +34,14 @@ const equations = {
 
 function App() {
 
+  const textColor = useColor('dark')
+
+  useEffect(() => {
+    document.documentElement.style.setProperty('--text-color', textColor)
+  }, [])
+
   return (
-    <div className="App">
+    <div className="App" style={{backgroundColor: useColor('light')}}>
       <h1>An Introduction to Gaussian Mixture Models</h1>
       {/* <EMVWrapper /> */}
       <h3>Our example problem, Avoiding Mountain Lions</h3>
@@ -264,7 +272,7 @@ function App() {
       <Question 
         question={'The following is a visualization of the line integrals over a probability density estimator of a mountain lion sighting. Which path minimizes the probability of seeing a mountain lion?'}
         visual={'choosePath'}
-        options={['The green path', 'The red path', 'The blue path']}
+        options={['The orange path', 'The blue path', 'The grey path']}
         expandedOptions={[
           'Incorrect. If we add the area of each individual trapeziod that makes up this line integral, we get an area of about 0.226. This is the largest area of all of the line integrals shown.', 
           'Correct. If we add the area of each individual trapezoid that makes up this line integral, we get an area of about 0.144. This is the smallest of the line integrals shown.', 

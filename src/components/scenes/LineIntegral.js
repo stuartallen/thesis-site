@@ -2,10 +2,12 @@ import * as THREE from 'three'
 import { useThree, extend } from "@react-three/fiber"
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
-import normalMixFragment from '../../shaders/fragment/normalMixTransparentFragment'
+import normalMixFragment from '../../shaders/fragment/normalMixFragment'
 import normalMixVertex from '../../shaders/vertex/normalMixVertex.js'
 
-import gaussian from '../../gaussian'
+import gaussian from '../../utils/gaussian'
+import hexToRGB from '../../utils/hexToRGB'
+import useColor from '../../hooks/useColor'
 
 extend({OrbitControls})
 
@@ -43,6 +45,10 @@ export default function LineIntegral() {
     }
     indices = new Uint32Array(indices)
 
+    const bottom_color = hexToRGB(useColor('bad'))
+    const top_color = hexToRGB(useColor('good'))
+    const wire_color = useColor('dark')
+
     return (<>
         <orbitControls args={[camera, gl.domElement]}/>
 
@@ -67,7 +73,10 @@ export default function LineIntegral() {
                     uMean3: {value: gauss3[0]},
                     uDeterminant3: {value: gauss3[1]},
                     uInverseCovariance3: {value: gauss3[2]},
-                    uTheta3: {value: 0.3}
+                    uTheta3: {value: 0.3},
+
+                    BOTTOM_COLOR: {value: bottom_color},
+                    TOP_COLOR: {value: top_color}
                 }}
             />
         </mesh>
@@ -86,7 +95,7 @@ export default function LineIntegral() {
                     itemSize={1}
                 />
             </bufferGeometry>
-            <meshBasicMaterial color={'green'/*'#bfa1b4'*/} side={THREE.DoubleSide}/>
+            <meshBasicMaterial color={bottom_color} side={THREE.DoubleSide}/>
         </mesh>
         <mesh>
             <bufferGeometry>
@@ -103,7 +112,7 @@ export default function LineIntegral() {
                     itemSize={1}
                 />
             </bufferGeometry>
-            <meshBasicMaterial color={'#BFEBCD'} side={THREE.DoubleSide} wireframe/>
+            <meshBasicMaterial color={wire_color} side={THREE.DoubleSide} wireframe/>
         </mesh>
     </>)
 }

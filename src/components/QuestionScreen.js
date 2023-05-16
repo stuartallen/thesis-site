@@ -7,8 +7,11 @@ import FalseCovarianceDemo from "./scenes/FalseCovarianceDemo";
 import SingularityDemo from "./scenes/SingularityDemo";
 import ClusterNumberDemo from "./scenes/ClusterNumberDemo";
 import ChoosePath from "./scenes/ChoosePath";
+import useColor from "../hooks/useColor";
 
 const QuestionScreen = ({visualName, visible, setVisible}) => {
+    const backgroundColor = useColor('light')
+
     return (
         <>
             <div className="visual">
@@ -19,7 +22,6 @@ const QuestionScreen = ({visualName, visible, setVisible}) => {
                             position: [0, 3, 9]
                         }}
                         >
-                            <color attach={"background"} args={['#f7eedf']}/>
                             <TrueCovarianceDemo />
                         </Canvas> 
                         <Canvas
@@ -27,7 +29,6 @@ const QuestionScreen = ({visualName, visible, setVisible}) => {
                             position: [0, 3, 9]
                         }}
                         >
-                            <color attach={"background"} args={['#f7eedf']}/>
                             <FalseCovarianceDemo />
                         </Canvas> 
                     </>
@@ -38,7 +39,6 @@ const QuestionScreen = ({visualName, visible, setVisible}) => {
                             position: [0, 3, 9]
                         }}
                         >
-                            <color attach={"background"} args={['#f7eedf']}/>
                             <SingularityDemo />
                         </Canvas> 
                         <Canvas
@@ -46,7 +46,6 @@ const QuestionScreen = ({visualName, visible, setVisible}) => {
                             position: [0, 3, 9]
                         }}
                         >
-                            <color attach={"background"} args={['#f7eedf']}/>
                             <TrueCovarianceDemo />
                         </Canvas> 
                     </>
@@ -57,7 +56,6 @@ const QuestionScreen = ({visualName, visible, setVisible}) => {
                             position: [0, 3, 9]
                         }}
                         >
-                            <color attach={"background"} args={['#f7eedf']}/>
                             <ClusterNumberDemo />
                         </Canvas> 
                         <Canvas
@@ -65,7 +63,6 @@ const QuestionScreen = ({visualName, visible, setVisible}) => {
                             position: [0, 3, 9]
                         }}
                         >
-                            <color attach={"background"} args={['#f7eedf']}/>
                             <TrueCovarianceDemo />
                         </Canvas> 
                     </>
@@ -76,7 +73,6 @@ const QuestionScreen = ({visualName, visible, setVisible}) => {
                             position: [0, 3, 9]
                         }}
                         >
-                            <color attach={"background"} args={['#f7eedf']}/>
                             <ChoosePath />
                         </Canvas> 
                     </>

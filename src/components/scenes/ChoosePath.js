@@ -2,10 +2,12 @@ import * as THREE from 'three'
 import { useThree, extend } from "@react-three/fiber"
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
-import normalMixFragment from '../../shaders/fragment/normalMixTransparentFragment'
+import normalMixFragment from '../../shaders/fragment/normalMixFragment'
 import normalMixVertex from '../../shaders/vertex/normalMixVertex.js'
 
-import gaussian from '../../gaussian'
+import gaussian from '../../utils/gaussian'
+import hexToRGB from '../../utils/hexToRGB'
+import useColor from '../../hooks/useColor'
 
 extend({OrbitControls})
 
@@ -19,6 +21,8 @@ const gauss2 = gaussian(2.0, -2.0, 2.0, -1.0, 2.0, 1.0)
 const gauss3 = gaussian(-3.0, -2.0, 1.0, -0.9, 0.0, 1.0)
 
 const Path = ({x, x_inv, y, color}) => {
+    const wire_color = useColor('dark')
+
     const t_b = x_inv(BEGIN)
     const t_e = x_inv(END)
 
@@ -100,7 +104,7 @@ const Path = ({x, x_inv, y, color}) => {
                         itemSize={1}
                     />
                 </bufferGeometry>
-                <meshBasicMaterial color={'#BFEBCD'} side={THREE.DoubleSide} wireframe/>
+                <meshBasicMaterial color={wire_color} side={THREE.DoubleSide} wireframe/>
             </mesh>
         </>
     )
@@ -131,6 +135,13 @@ export default function ChoosePath() {
         return 0.01 * t * t * t - 1
     }
 
+    const bottom_color = hexToRGB(useColor('bad'))
+    const top_color = hexToRGB(useColor('good'))
+
+    const path_1_color = useColor('bad')
+    const path_2_color = useColor('good')
+    const path_3_color = useColor('neutral')
+
     return (<>
         <orbitControls args={[camera, gl.domElement]}/>
 
@@ -155,13 +166,16 @@ export default function ChoosePath() {
                     uMean3: {value: gauss3[0]},
                     uDeterminant3: {value: gauss3[1]},
                     uInverseCovariance3: {value: gauss3[2]},
-                    uTheta3: {value: 0.3}
+                    uTheta3: {value: 0.3},
+
+                    BOTTOM_COLOR: {value: bottom_color},
+                    TOP_COLOR: {value: top_color}
                 }}
             />
         </mesh>
-       <Path x={x} x_inv={x_inv} y={y_1} color={'green'}/>
-       <Path x={x} x_inv={x_inv} y={y_2} color={'red'}/>
-       <Path x={x} x_inv={x_inv} y={y_3} color={'blue'}/>
+       <Path x={x} x_inv={x_inv} y={y_1} color={path_1_color}/>
+       <Path x={x} x_inv={x_inv} y={y_2} color={path_2_color}/>
+       <Path x={x} x_inv={x_inv} y={y_3} color={path_3_color}/>
     </>)
 }
 

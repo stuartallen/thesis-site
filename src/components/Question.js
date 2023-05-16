@@ -17,7 +17,7 @@ export default function Question({question, eqPieces, visual, options, expandedO
             <Expression pieces={eqPieces}/>
             {visual ? 
                 visual == 'kmeans' ? 
-                    <img src={'/clusters.jpg'} style={{transform: `scale(${scale})`}}/>
+                    <img src={'/newClusters.jpg'} style={{transform: `scale(${scale})`}}/>
                 : <QuestionScreen visualName={visual} visible={visible} setVisible={setVisible}/>
             : null}
             <div className="optionsContainer">

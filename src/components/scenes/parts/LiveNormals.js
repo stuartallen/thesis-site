@@ -2,8 +2,10 @@ import * as THREE from 'three'
 
 import emVisFragment from '../../../shaders/fragment/emVisFragment.js'
 import normalMixVertex from '../../../shaders/vertex/normalMixVertex.js'
-import gaussian from '../../../gaussian.js'
+import gaussian from '../../../utils/gaussian.js'
 import { useEffect, useRef } from 'react'
+import hexToRGB from '../../../utils/hexToRGB.js'
+import useColor from '../../../hooks/useColor.js'
 
 export default function LiveNormals({mixture}) {
     const { weights, means, covariances } = mixture
@@ -20,6 +22,10 @@ export default function LiveNormals({mixture}) {
             covariances[i][1][1]
         ), weights[i]])
     }
+
+    const color1 = hexToRGB(useColor('good'))
+    const color2 = hexToRGB(useColor('bad'))
+    const color3 = hexToRGB(useColor('neutral'))
 
     const normalsMaterial = useRef(new THREE.ShaderMaterial({
         vertexShader: normalMixVertex,
@@ -40,10 +46,14 @@ export default function LiveNormals({mixture}) {
                 uMean3: {value: clusters[2][0][0]},
                 uDeterminant3: {value: clusters[2][0][1]},
                 uInverseCovariance3: {value: clusters[2][0][2]},
-                uTheta3: {value: clusters[2][1]
+                uTheta3: {value: clusters[2][1]},
+
+                color1: {value: color1},
+                color2: {value: color2},
+                color3: {value: color3}
             }
         }
-    }))
+    ))
 
     useEffect(() => {
         normalsMaterial.current.uniforms.uMean1.value = clusters[0][0][0]

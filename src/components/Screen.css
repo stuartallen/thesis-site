@@ -1,5 +1,4 @@
 .screenContainer {
-    background-color: #f7eedf;
     border-radius: 10px;
     border-style: solid;
     border-width: 3px;
@@ -13,26 +12,4 @@
 
     padding: 10px;
     margin: 10px;
-}
-
-.stopButtonContainer {
-    position: absolute;
-    width: 75%;
-    height: 300px;
-    pointer-events: none;
-}
-
-.stopButton {
-    pointer-events: all;
-    border-radius: 100%;
-    color: white;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    position: absolute;
-    top: 5px;
-    right: 5px;
 }

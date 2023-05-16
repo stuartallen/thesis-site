@@ -23,7 +23,6 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    color: #302f2f;
 }
 
 .arrow {
@@ -34,10 +33,9 @@
     color: gray;
 }
 
-.stopButton {
+.restartButton {
     pointer-events: all;
     border-radius: 100%;
-    color: #302f2f;
     width: 24px;
     height: 24px;
     display: flex;
@@ -51,7 +49,6 @@
 
 .lastStep {
     position: absolute;
-    color: #302f2f;
     width: 100%;
     height: 100%;
     display: flex;

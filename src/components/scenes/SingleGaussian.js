@@ -5,7 +5,9 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import normalMixFragment from '../../shaders/fragment/normalMixFragment.js'
 import normalMixVertex from '../../shaders/vertex/normalMixVertex.js'
 
-import gaussian from '../../gaussian.js'
+import gaussian from '../../utils/gaussian.js'
+import hexToRGB from '../../utils/hexToRGB.js'
+import useColor from '../../hooks/useColor.js'
 
 extend({OrbitControls})
 
@@ -15,6 +17,9 @@ export default function SingleGaussian({covariance}) {
     const gauss3 = gaussian(100.0, 100.0, 1.0, -0.9, 0.0, 1.0)
 
     const { camera, gl } = useThree()
+
+    const bottom_color = hexToRGB(useColor('bad'))
+    const top_color = hexToRGB(useColor('good'))
 
     return (<>
         <orbitControls args={[camera, gl.domElement]}/>
@@ -40,7 +45,10 @@ export default function SingleGaussian({covariance}) {
                     uMean3: {value: gauss3[0]},
                     uDeterminant3: {value: gauss3[1]},
                     uInverseCovariance3: {value: gauss3[2]},
-                    uTheta3: {value: 0.4}
+                    uTheta3: {value: 0.4},
+
+                    BOTTOM_COLOR: {value: bottom_color},
+                    TOP_COLOR: {value: top_color}
                 }}
             />
         </mesh>

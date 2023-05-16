@@ -1,13 +1,15 @@
 import * as THREE from 'three'
 import { useThree, extend, useFrame } from "@react-three/fiber"
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import gaussian from "../../gaussian"
+import gaussian from '../../utils/gaussian'
 import MultivariateNormal from 'multivariate-normal'
 
-import normalMixFragment from '../../shaders/fragment/normalMixTransparentFragment'
+import normalMixFragment from '../../shaders/fragment/normalMixFragment'
 import normalMixVertex from '../../shaders/vertex/normalMixVertex.js'
+import hexToRGB from '../../utils/hexToRGB'
+import useColor from '../../hooks/useColor'
 
-const NUM_POINTS = 1000
+const NUM_POINTS = 100
 const thetas = [0.5, 0.5, 0]
 
 export default function FalseCovarianceDemo() {
@@ -33,12 +35,16 @@ export default function FalseCovarianceDemo() {
     }
     const dataPositionsArr = new Float32Array(dataPositions)
 
+    const bottom_color = hexToRGB(useColor('bad'))
+    const top_color = hexToRGB(useColor('good'))
+    const point_color = useColor('dark')
+
     return (<>
         <orbitControls args={[camera, gl.domElement]}/>
 
         <mesh rotation-x={Math.PI * 0.5} position-z={0.1}>
             <planeGeometry attach={"geometry"} args={[10, 10, 10, 10]}/>
-            <meshBasicMaterial color={'#1B1A1A'} wireframe />
+            <meshBasicMaterial color={point_color} wireframe />
         </mesh>
 
         <points>
@@ -50,7 +56,7 @@ export default function FalseCovarianceDemo() {
                     itemSize={3}
                 />
             </bufferGeometry>
-            <pointsMaterial color={'green'} sizeAttenuation={false} size={10}/>
+            <pointsMaterial color={point_color} sizeAttenuation={false} size={10}/>
         </points>
 
         <mesh rotation-x={Math.PI * 0.5}>
@@ -74,7 +80,10 @@ export default function FalseCovarianceDemo() {
                     uMean3: {value: gauss3[0]},
                     uDeterminant3: {value: gauss3[1]},
                     uInverseCovariance3: {value: gauss3[3]},
-                    uTheta3: {value: 0.0}
+                    uTheta3: {value: 0.0},
+
+                    BOTTOM_COLOR: {value: bottom_color},
+                    TOP_COLOR: {value: top_color}
                 }}
             />
         </mesh>

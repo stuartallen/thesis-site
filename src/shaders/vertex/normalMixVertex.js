@@ -14,6 +14,15 @@ uniform float uDeterminant3;
 uniform mat2 uInverseCovariance3;
 uniform float uTheta3;
 
+//	Used in normal height representations
+uniform vec3 BOTTOM_COLOR;
+uniform vec3 TOP_COLOR;
+
+//	Used in EM Visualization
+uniform vec3 color1;
+uniform vec3 color2;
+uniform vec3 color3;
+
 varying float probability;
 varying vec3 vPosition;
 

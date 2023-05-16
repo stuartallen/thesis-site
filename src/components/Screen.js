@@ -6,6 +6,7 @@ import NormalMix from "./scenes/NormalMix";
 import LineIntegral from "./scenes/LineIntegral";
 import EMVisualizationWrapper from "./EMVisualizationWrapper";
 import SingleGaussian from "./scenes/SingleGaussian";
+import useColor from "../hooks/useColor";
 
 const Screen = ({scene}) => {
     const [needsLoadEMVis, setNeedsLoadEMVis] = useState(false)
@@ -18,9 +19,12 @@ const Screen = ({scene}) => {
         )
     }
 
+    const backgroundColor = useColor('light')
+    const borderColor = useColor('dark')
+
     return (
         <>
-            <div className="screenContainer">
+            <div className="screenContainer" style={{backgroundColor: backgroundColor, borderColor: borderColor}}>
                     {scene === "emVisualization" ? 
                         needsLoadEMVis ? 
                             <Loading /> :
@@ -32,7 +36,7 @@ const Screen = ({scene}) => {
                                 position: [0, 3, 9]
                             }}
                         >
-                            <color attach={"background"} args={['#f7eedf']}/>
+                            <color attach={"background"} args={[backgroundColor]}/>
                             {scene === "normalMix" ?
                                 <NormalMix /> :
                                 scene === "lineIntegral" ? 
