@@ -6,6 +6,7 @@ import TrueCovarianceDemo from "./scenes/TrueCovarianceDemo";
 import FalseCovarianceDemo from "./scenes/FalseCovarianceDemo";
 import SingularityDemo from "./scenes/SingularityDemo";
 import ClusterNumberDemo from "./scenes/ClusterNumberDemo";
+import ChoosePath from "./scenes/ChoosePath";
 
 const QuestionScreen = ({visualName, visible, setVisible}) => {
     return (
@@ -66,6 +67,17 @@ const QuestionScreen = ({visualName, visible, setVisible}) => {
                         >
                             <color attach={"background"} args={['#f7eedf']}/>
                             <TrueCovarianceDemo />
+                        </Canvas> 
+                    </>
+                : visualName === 'choosePath' ? 
+                    <>
+                        <Canvas
+                        camera={{
+                            position: [0, 3, 9]
+                        }}
+                        >
+                            <color attach={"background"} args={['#f7eedf']}/>
+                            <ChoosePath />
                         </Canvas> 
                     </>
                 : null}

@@ -1,4 +1,5 @@
 import './App.css';
+import EMVWrapper from './components/EMVWrapper';
 import Question from './components/Question';
 
 //  My components
@@ -34,6 +35,7 @@ function App() {
   return (
     <div className="App">
       <h1>An Introduction to Gaussian Mixture Models</h1>
+      {/* <EMVWrapper /> */}
       <h3>Our example problem, Avoiding Mountain Lions</h3>
       <div className='explanation'>
         Suppose we are beginning a hike through a region known for its mountain lions. At the beginning of our trek, we have access to a map
@@ -258,6 +260,17 @@ function App() {
           <li>Compare the likelihood of seeing a mountain lion on each path.</li>
         </ol>
       </div>
+
+      <Question 
+        question={'The following is a visualization of the line integrals over a probability density estimator of a mountain lion sighting. Which path minimizes the probability of seeing a mountain lion?'}
+        visual={'choosePath'}
+        options={['The green path', 'The red path', 'The blue path']}
+        expandedOptions={[
+          'Incorrect. If we add the area of each individual trapeziod that makes up this line integral, we get an area of about 0.226. This is the largest area of all of the line integrals shown.', 
+          'Correct. If we add the area of each individual trapezoid that makes up this line integral, we get an area of about 0.144. This is the smallest of the line integrals shown.', 
+          'Incorrect. If we add the area of each individual trapeziod that makes up this line integral, we get an area of about 0.201. One of the line integrals here has a smaller area.']}
+        correctness={[false, true, false]}
+      />
       
       <h2>Further Study</h2>
 
