@@ -7,10 +7,6 @@
 
 .label {
     position: absolute;
-
-    font-size: small;
     z-index: 1;
-    background-color: white;
-    color: black;
     border: 0.5mm solid;
 }

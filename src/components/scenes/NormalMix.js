@@ -22,7 +22,7 @@ export default function NormalMix() {
     const top_color = hexToRGB(useColor('good'))
 
     return (<>
-        <orbitControls args={[camera, gl.domElement]}/>
+        <orbitControls args={[camera, gl.domElement]} enableZoom={false} enablePan={false}/>
 
         <mesh rotation-x={Math.PI * 0.5}>
             <planeGeometry attach={"geometry"} args={[10, 10, 64, 64]}/>

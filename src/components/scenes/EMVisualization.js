@@ -11,7 +11,7 @@ export default function EMVisualization({dataset, mixture}) {
     const { camera, gl } = useThree()
     
     return (<>
-        <orbitControls args={[camera, gl.domElement]}/>
+        <orbitControls args={[camera, gl.domElement]} enableZoom={false} enablePan={false}/>
         
         <mesh rotation-x={Math.PI * -0.5} position-y={-0.1}>
             <planeGeometry args={[10, 10, 20, 20]}/>

@@ -20,10 +20,17 @@
   font-size: 18px;
 }
 
+h1 {
+  justify-content: center;
+}
+
 h1, h2, h3 {
   width: 75%;
   display: flex;
-  justify-content: center;
+}
+
+h2, h3 {
+  justify-content: start;
 }
 
 .explanation {
@@ -43,5 +50,12 @@ h1, h2, h3 {
 }
 
 iframe {
-  width: 30%;
+  width: 75%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#endSpacer {
+  width: 100%;
+  height: 100px;
 }

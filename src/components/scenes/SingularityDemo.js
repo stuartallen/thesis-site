@@ -42,7 +42,7 @@ export default function SingularityDemo() {
     const point_color = useColor('dark')
 
     return (<>
-        <orbitControls args={[camera, gl.domElement]}/>
+        <orbitControls args={[camera, gl.domElement]} enableZoom={false} enablePan={false}/>
 
         <mesh rotation-x={Math.PI * 0.5} position-z={0.1}>
             <planeGeometry attach={"geometry"} args={[10, 10, 10, 10]}/>

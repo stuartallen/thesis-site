@@ -1,17 +1,21 @@
+:root {
+    --hover-color: #000000;
+}
+
 .option {
     border-radius: 5px;
-    margin-bottom: 5px;
+    margin: 5px;
     padding: 5px;
-    background-color: #D3D3D3;
+    border: 1px solid;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: fit-content;
+    width: 100%;
     padding: 10px;
 }
 
 .option:hover {
-    background-color: #BACCE1;
+    background-color: var(--hover-color);
 }
 
 .expandedText {
