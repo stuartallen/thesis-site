@@ -1,4 +1,4 @@
-export default function({dataset}) {
+export default function Datapoints({dataset}) {
     return (<>
         {dataset.map((dataVal, i) => (
             <points key={i}>

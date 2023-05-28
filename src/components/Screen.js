@@ -7,6 +7,7 @@ import LineIntegral from "./scenes/LineIntegral";
 import EMVisualizationWrapper from "./EMVisualizationWrapper";
 import SingleGaussian from "./scenes/SingleGaussian";
 import useColor from "../hooks/useColor";
+import EMVWrapper from "./EMVWrapper";
 
 const Screen = ({scene}) => {
     const [needsLoadEMVis, setNeedsLoadEMVis] = useState(false)
@@ -28,7 +29,7 @@ const Screen = ({scene}) => {
                     {scene === "emVisualization" ? 
                         needsLoadEMVis ? 
                             <Loading /> :
-                            <EMVisualizationWrapper setNeedsLoadEMVis={setNeedsLoadEMVis}/>
+                            <EMVWrapper setNeedsLoadEMVis={setNeedsLoadEMVis}/>
                     :
                     <>
                         <Canvas

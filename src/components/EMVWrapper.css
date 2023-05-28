@@ -1,0 +1,58 @@
+.visAndControlsContainer {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;    
+    width: 100%;
+    height: 100%;
+}
+
+.controls {
+    z-index: 1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+#arrowContainer {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.arrow {
+    pointer-events: all;
+}
+
+.disabled {
+    color: gray;
+}
+
+.restartButton {
+    pointer-events: all;
+    border-radius: 100%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.lastStep {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}

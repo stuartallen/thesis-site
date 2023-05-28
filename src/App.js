@@ -43,7 +43,6 @@ function App() {
   return (
     <div className="App" style={{backgroundColor: useColor('light')}}>
       <h1>An Introduction to Gaussian Mixture Models</h1>
-      {/* <EMVWrapper /> */}
       <h3>Our example problem, Avoiding Mountain Lions</h3>
       <div className='explanation'>
         Suppose we are beginning a hike through a region known for its mountain lions. At the beginning of our trek, we have access to a map
