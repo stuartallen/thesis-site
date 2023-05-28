@@ -22,8 +22,7 @@ export default function Question({question, eqPieces, visual, options, expandedO
             : null}
             <div className="optionsContainer" style={{
                 flexDirection: options.length === 2 ? 'row' : 'column', 
-                justifyContent: options.length === 2 ? 'space-between' : null,
-                maxWidth: options.length === 2 ? '50%' : '400px'
+                justifyContent: options.length === 2 ? 'space-between' : null
             }}>
                 {options.map((text, key) => 
                     <Option 
