@@ -17,6 +17,7 @@ uniform float uTheta3;
 //	Used in normal height representations
 uniform vec3 BOTTOM_COLOR;
 uniform vec3 TOP_COLOR;
+uniform float BASE_ALPHA;
 
 //	Used in EM Visualization
 uniform vec3 color1;

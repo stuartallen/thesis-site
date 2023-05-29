@@ -18,9 +18,9 @@ const thetas = [0.3, 0.4, 0.3]
 const MAX_ITER = 10
 
 const EMVWrapper = ({setNeedsLoadEMVis}) => {
-    const color1 = hexToRGB(useColor('good'))
-    const color2 = hexToRGB(useColor('bad'))
-    const color3 = hexToRGB(useColor('neutral'))
+    const color1 = hexToRGB(useColor('cluster1'))
+    const color2 = hexToRGB(useColor('cluster2'))
+    const color3 = hexToRGB(useColor('cluster3'))
 
     //  Initialize the number of steps in the simulation
     const [step, setStep] = useState(0)

@@ -8,6 +8,8 @@ import SingularityDemo from "./scenes/SingularityDemo";
 import ClusterNumberDemo from "./scenes/ClusterNumberDemo";
 import ChoosePath from "./scenes/ChoosePath";
 import useColor from "../hooks/useColor";
+import TrueSingularityDemo from "./scenes/TrueSingularityDemo";
+import TrueClusterNumberDemo from "./scenes/TrueClusterNumberDemo";
 
 const QuestionScreen = ({visualName, visible, setVisible}) => {
     const backgroundColor = useColor('light')
@@ -46,7 +48,7 @@ const QuestionScreen = ({visualName, visible, setVisible}) => {
                             position: [0, 3, 9]
                         }}
                         >
-                            <TrueCovarianceDemo />
+                            <TrueSingularityDemo />
                         </Canvas> 
                     </>
                 : visualName === 'clusterNumberDemo' ?
@@ -63,7 +65,7 @@ const QuestionScreen = ({visualName, visible, setVisible}) => {
                             position: [0, 3, 9]
                         }}
                         >
-                            <TrueCovarianceDemo />
+                            <TrueClusterNumberDemo />
                         </Canvas> 
                     </>
                 : visualName === 'choosePath' ? 

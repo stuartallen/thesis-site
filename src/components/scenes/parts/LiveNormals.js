@@ -23,9 +23,9 @@ export default function LiveNormals({mixture}) {
         ), weights[i]])
     }
 
-    const color1 = hexToRGB(useColor('good'))
-    const color2 = hexToRGB(useColor('bad'))
-    const color3 = hexToRGB(useColor('neutral'))
+    const color1 = hexToRGB(useColor('cluster1'))
+    const color2 = hexToRGB(useColor('cluster2'))
+    const color3 = hexToRGB(useColor('cluster3'))
 
     const normalsMaterial = useRef(new THREE.ShaderMaterial({
         vertexShader: normalMixVertex,

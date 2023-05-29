@@ -18,9 +18,9 @@ const NUM_POINTS = 100
 const thetas = [0.3, 0.4, 0.3]
 
 const EMVisualizationWrapper = ({setNeedsLoadEMVis}) => {
-    const color1 = hexToRGB(useColor('good'))
-    const color2 = hexToRGB(useColor('bad'))
-    const color3 = hexToRGB(useColor('neutral'))
+    const color1 = hexToRGB(useColor('cluster1'))
+    const color2 = hexToRGB(useColor('cluster2'))
+    const color3 = hexToRGB(useColor('cluster3'))
 
     //  This determines what step of the process the visualization is on
     const [stepCount, setStepCount] = useState(0)

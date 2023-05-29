@@ -45,8 +45,9 @@ export default function LineIntegral() {
     }
     indices = new Uint32Array(indices)
 
-    const bottom_color = hexToRGB(useColor('bad'))
-    const top_color = hexToRGB(useColor('good'))
+    const bottom_color = hexToRGB(useColor('cluster3'))
+    const top_color = hexToRGB(useColor('cluster1'))
+    const integral_color = hexToRGB(useColor('cluster2'))
     const wire_color = useColor('dark')
 
     return (<>
@@ -76,7 +77,8 @@ export default function LineIntegral() {
                     uTheta3: {value: 0.3},
 
                     BOTTOM_COLOR: {value: bottom_color},
-                    TOP_COLOR: {value: top_color}
+                    TOP_COLOR: {value: top_color},
+                    BASE_ALPHA: {value: 0.4}
                 }}
             />
         </mesh>
@@ -95,7 +97,7 @@ export default function LineIntegral() {
                     itemSize={1}
                 />
             </bufferGeometry>
-            <meshBasicMaterial color={bottom_color} side={THREE.DoubleSide}/>
+            <meshBasicMaterial color={integral_color} side={THREE.DoubleSide}/>
         </mesh>
         <mesh>
             <bufferGeometry>
@@ -113,6 +115,10 @@ export default function LineIntegral() {
                 />
             </bufferGeometry>
             <meshBasicMaterial color={wire_color} side={THREE.DoubleSide} wireframe/>
+        </mesh>
+        <mesh rotation-x={Math.PI * 0.5} position-z={0.1}>
+            <planeGeometry attach={"geometry"} args={[10, 10, 10, 10]}/>
+            <meshBasicMaterial color={wire_color} wireframe />
         </mesh>
     </>)
 }

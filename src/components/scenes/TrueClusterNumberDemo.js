@@ -10,9 +10,9 @@ import hexToRGB from '../../utils/hexToRGB'
 import useColor from '../../hooks/useColor'
 
 const NUM_POINTS = 100
-const thetas = [0.3, 0.45, 0.25]
+const thetas = [0.3, 0.45, 0.0]
 
-export default function ClusterNumberDemo() {
+export default function TrueClusterNumberDemo() {
     const downScale = 3.0
     const gauss1 = gaussian(2.5, 0.0, 1.0, 0.0, 0.0, 1.0)
     const gauss2 = gaussian(-2.5, 0.0, 1.0/ downScale, -2.0/ downScale, 1.0/ downScale, 2.0/ downScale)

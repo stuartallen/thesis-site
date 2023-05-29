@@ -18,11 +18,16 @@ export default function SingleGaussian({covariance}) {
 
     const { camera, gl } = useThree()
 
-    const bottom_color = hexToRGB(useColor('bad'))
-    const top_color = hexToRGB(useColor('good'))
+    const bottom_color = hexToRGB(useColor('cluster3'))
+    const top_color = hexToRGB(useColor('cluster1'))
 
     return (<>
         <orbitControls args={[camera, gl.domElement]} enableZoom={false} enablePan={false}/>
+
+        <mesh rotation-x={Math.PI * -0.5} position-y={-0.1}>
+            <planeGeometry args={[10, 10, 20, 20]}/>
+            <meshBasicMaterial color={useColor('dark')} wireframe side={THREE.DoubleSide}/>
+        </mesh>
 
         <mesh rotation-x={Math.PI * 0.5}>
             <planeGeometry attach={"geometry"} args={[10, 10, 64, 64]}/>
@@ -48,7 +53,8 @@ export default function SingleGaussian({covariance}) {
                     uTheta3: {value: 0.4},
 
                     BOTTOM_COLOR: {value: bottom_color},
-                    TOP_COLOR: {value: top_color}
+                    TOP_COLOR: {value: top_color},
+                    BASE_ALPHA: {value: 0.6}
                 }}
             />
         </mesh>

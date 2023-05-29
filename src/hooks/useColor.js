@@ -2,9 +2,10 @@ const useColor = (key) => {
     const colorCodes = {
         'light'     :   '#ffffff',
         'dark'      :   '#695d46',
-        'good'      :   '#4db6ac',
-        'bad'       :   '#f3830f',
-        'neutral'   :   '#b3a77d'
+        'neutral'   :   '#B3A77D',
+        'cluster1'  :   '#5CC2A9',
+        'cluster2'  :   '#DF8F10',
+        'cluster3'  :   '#E27F7F'
     }
 
     if(colorCodes[key]) {

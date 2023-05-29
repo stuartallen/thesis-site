@@ -35,8 +35,8 @@ export default function FalseCovarianceDemo() {
     }
     const dataPositionsArr = new Float32Array(dataPositions)
 
-    const bottom_color = hexToRGB(useColor('bad'))
-    const top_color = hexToRGB(useColor('good'))
+    const bottom_color = hexToRGB(useColor('cluster3'))
+    const top_color = hexToRGB(useColor('cluster1'))
     const point_color = useColor('dark')
 
     return (<>
@@ -83,7 +83,8 @@ export default function FalseCovarianceDemo() {
                     uTheta3: {value: 0.0},
 
                     BOTTOM_COLOR: {value: bottom_color},
-                    TOP_COLOR: {value: top_color}
+                    TOP_COLOR: {value: top_color},
+                    BASE_ALPHA: {value: 0.6}
                 }}
             />
         </mesh>

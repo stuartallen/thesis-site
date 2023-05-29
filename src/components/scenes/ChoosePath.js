@@ -135,12 +135,13 @@ export default function ChoosePath() {
         return 0.01 * t * t * t - 1
     }
 
-    const bottom_color = hexToRGB(useColor('bad'))
-    const top_color = hexToRGB(useColor('good'))
+    const bottom_color = hexToRGB(useColor('cluster3'))
+    const top_color = hexToRGB(useColor('cluster1'))
 
-    const path_1_color = useColor('bad')
-    const path_2_color = useColor('good')
-    const path_3_color = useColor('neutral')
+    const path_1_color = useColor('cluster1')
+    const path_2_color = useColor('cluster2')
+    const path_3_color = useColor('cluster3')
+    const wire_color = useColor('dark')
 
     return (<>
         <orbitControls args={[camera, gl.domElement]} enableZoom={false} enablePan={false}/>
@@ -169,13 +170,18 @@ export default function ChoosePath() {
                     uTheta3: {value: 0.3},
 
                     BOTTOM_COLOR: {value: bottom_color},
-                    TOP_COLOR: {value: top_color}
+                    TOP_COLOR: {value: top_color},
+                    BASE_ALPHA: {value: 0.3}
                 }}
             />
         </mesh>
        <Path x={x} x_inv={x_inv} y={y_1} color={path_1_color}/>
        <Path x={x} x_inv={x_inv} y={y_2} color={path_2_color}/>
        <Path x={x} x_inv={x_inv} y={y_3} color={path_3_color}/>
+       <mesh rotation-x={Math.PI * 0.5} position-z={0.1}>
+            <planeGeometry attach={"geometry"} args={[10, 10, 10, 10]}/>
+            <meshBasicMaterial color={wire_color} wireframe />
+        </mesh>
     </>)
 }
 

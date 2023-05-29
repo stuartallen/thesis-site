@@ -10,14 +10,14 @@ import hexToRGB from '../../utils/hexToRGB'
 import useColor from '../../hooks/useColor'
 
 const NUM_POINTS = 100
-const thetas = [0.4, 0.4, 0.2]
+const thetas = [0.49, 0.49, 0.02]
 
 export default function SingularityDemo() {
     const downScale = 1
     const gauss1 = gaussian(2.5, 0.0, 1.0 / downScale, 0.0/ downScale, 0.0/ downScale, 1.0/ downScale)
     const gauss2 = gaussian(-2.5, 0.0, 1.0/ downScale, -4.0/ downScale, 1.0/ downScale, 4.0/ downScale)
     const singularityScale = 10
-    const gauss3 = gaussian(4.5, -4.5, 1.0/ singularityScale, -0.9/ singularityScale, 0.0/ singularityScale, 1.0/ singularityScale)
+    const gauss3 = gaussian(3.5, -3.5, 1.0/ singularityScale, -0.9/ singularityScale, 0.0/ singularityScale, 1.0/ singularityScale)
 
     const { camera, gl } = useThree()
 
@@ -34,11 +34,11 @@ export default function SingularityDemo() {
             dataPositions.push(sample[0], 0, -sample[1])
         }
     }
-    dataPositions.push(4.5, 0, -4.5)
+    dataPositions.push(3.5, 0, -3.5)
     const dataPositionsArr = new Float32Array(dataPositions)
 
-    const bottom_color = hexToRGB(useColor('bad'))
-    const top_color = hexToRGB(useColor('good'))
+    const bottom_color = hexToRGB(useColor('cluster3'))
+    const top_color = hexToRGB(useColor('cluster1'))
     const point_color = useColor('dark')
 
     return (<>
@@ -85,7 +85,8 @@ export default function SingularityDemo() {
                     uTheta3: {value: thetas[2]},
 
                     BOTTOM_COLOR: {value: bottom_color},
-                    TOP_COLOR: {value: top_color}
+                    TOP_COLOR: {value: top_color},
+                    BASE_ALPHA: {value: 0.6}
                 }}
             />
         </mesh>

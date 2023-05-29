@@ -10,13 +10,14 @@ import hexToRGB from '../../utils/hexToRGB'
 import useColor from '../../hooks/useColor'
 
 const NUM_POINTS = 100
-const thetas = [0.3, 0.45, 0.25]
+const thetas = [0.5, 0.5, 0.0]
 
-export default function ClusterNumberDemo() {
-    const downScale = 3.0
-    const gauss1 = gaussian(2.5, 0.0, 1.0, 0.0, 0.0, 1.0)
-    const gauss2 = gaussian(-2.5, 0.0, 1.0/ downScale, -2.0/ downScale, 1.0/ downScale, 2.0/ downScale)
-    const gauss3 = gaussian(-2.5, -3.0, 1.0/ downScale, -2.0/ downScale, 1.0/ downScale, 2.0/ downScale)
+export default function TrueSingularityDemo() {
+    const downScale = 1
+    const gauss1 = gaussian(2.5, 0.0, 1.0 / downScale, 0.0/ downScale, 0.0/ downScale, 1.0/ downScale)
+    const gauss2 = gaussian(-2.5, 0.0, 1.0/ downScale, -4.0/ downScale, 1.0/ downScale, 4.0/ downScale)
+    const singularityScale = 10
+    const gauss3 = gaussian(3.5, -3.5, 1.0/ singularityScale, -0.9/ singularityScale, 0.0/ singularityScale, 1.0/ singularityScale)
 
     const { camera, gl } = useThree()
 
@@ -33,7 +34,7 @@ export default function ClusterNumberDemo() {
             dataPositions.push(sample[0], 0, -sample[1])
         }
     }
-    dataPositions.push(4.5, 0, -4.5)
+    dataPositions.push(3.5, 0, -3.5)
     const dataPositionsArr = new Float32Array(dataPositions)
 
     const bottom_color = hexToRGB(useColor('cluster3'))
