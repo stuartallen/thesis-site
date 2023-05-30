@@ -11,12 +11,11 @@ import useColor from "../hooks/useColor";
 import TrueSingularityDemo from "./scenes/TrueSingularityDemo";
 import TrueClusterNumberDemo from "./scenes/TrueClusterNumberDemo";
 
-const QuestionScreen = ({visualName, visible, setVisible}) => {
-    const backgroundColor = useColor('light')
+const QuestionScreen = ({visualName, visible, setVisible, column}) => {
 
     return (
         <>
-            <div className="visual">
+            <div className="visual" style={{flexDirection: column ? 'column' : 'row'}}>
                 {visualName === 'covarianceDemo' ?
                     <>
                         <Canvas

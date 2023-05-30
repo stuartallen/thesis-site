@@ -15,7 +15,7 @@ import hexToRGB from "../utils/hexToRGB";
 
 const NUM_POINTS = 100
 const thetas = [0.3, 0.4, 0.3]
-const MAX_ITER = 10
+const MAX_ITER = 20
 
 const EMVWrapper = ({setNeedsLoadEMVis}) => {
     const color1 = hexToRGB(useColor('cluster1'))
@@ -54,7 +54,6 @@ const EMVWrapper = ({setNeedsLoadEMVis}) => {
     useEffect(() => {
         if(dataPositionsColorsStepsList.current.length == 1) {
             for(let i = 1; i < MAX_ITER; i++) {
-                console.log(mixtureStepsList.current)
                 const partialAssignmentList = expectationStep(
                     datasetPositions,
                     mixtureStepsList.current[i - 1].means,
@@ -84,7 +83,6 @@ const EMVWrapper = ({setNeedsLoadEMVis}) => {
     }
 
     const leftArrowClick = () => {
-        console.log(mixtureStepsList.current)
         setStep(Math.max(step - 1, 0))
     }
 
@@ -161,13 +159,7 @@ const initMeans = (dataset) => {
 
     //  For each cluster
     for(let i = 0; i < 3; i++) {
-        let val = dataset[randInt(0, dataset.length)]
-
-        //  Reselect until a new point is chosen
-        //  Assumes there are less clusters than data points (should always be the case when using GMMs)
-        while(initMeans[i - 1] && initMeans[i - 1][0] == val[0] && initMeans[i - 1][1] == val[1]) {
-            val = initMeans[randInt(0, dataset.length)]
-        }
+        let val = dataset[randInt(0, dataset.length - 1)]
 
         initMeans.push(val)
     }

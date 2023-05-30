@@ -1,10 +1,9 @@
 .optionsContainer {
     display: flex;
-    width: 100%;
-    
-    align-items: start;
+    width: 90%;
 
     margin: 5px;
+    margin-top: 20px;
 }
 
 .questionContainer {
@@ -21,4 +20,8 @@
 
     padding: 10px;
     margin: 10px;
+}
+
+.questionImg {
+    width: 75%;
 }

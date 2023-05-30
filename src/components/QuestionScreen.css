@@ -1,9 +1,15 @@
 .visual {
     display: flex;
-    flex-direction: row;
     justify-content: center;
-    width: 100%;
+    width: 90%;
     height: 300px;
+}
+
+.visual > * {
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 1px;
+    margin: 5px;
 }
 
 .stopButtonContainer {

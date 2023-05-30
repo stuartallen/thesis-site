@@ -1,15 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import './Question.css'
 import Option from "./Option";
 import Expression from "./Expression";
 import QuestionScreen from "./QuestionScreen";
 
+const MIN_SIDE_TO_SIDE_WIDTH = 700
+
 export default function Question({question, eqPieces, visual, options, expandedOptions, correctness}) {
     const [selected, setSelected] = useState(-1)
     const [visible, setVisible] = useState(false)
+    const [ windowWidth, setWindowWidth] = useState(window.innerWidth)
 
-    const scale = window.innerWidth < 500 ? 0.3 : window.innerWidth < 1000 ? 0.6 : 1
+    const updateWindowWidth = () => {
+        setWindowWidth(window.innerWidth)
+    }
+
+    useEffect(() => {
+        window.addEventListener('resize', updateWindowWidth)
+        return () => {
+            window.removeEventListener('resize', updateWindowWidth)
+        }
+    })
+
+    if(options.length == 2) {
+        options = windowWidth < MIN_SIDE_TO_SIDE_WIDTH && visual != 'kmeans' ? ['Top', 'Bottom'] : ['Left', 'Right']
+    }
 
     return (<>
         <div className="questionContainer">
@@ -17,12 +33,12 @@ export default function Question({question, eqPieces, visual, options, expandedO
             <Expression pieces={eqPieces}/>
             {visual ? 
                 visual == 'kmeans' ? 
-                    <img src={'/newClusters.jpg'} style={{transform: `scale(${scale})`}}/>
-                : <QuestionScreen visualName={visual} visible={visible} setVisible={setVisible}/>
+                    <img src={'/newClusters.jpg'} className="questionImg"/>
+                : <QuestionScreen visualName={visual} visible={visible} setVisible={setVisible} column={windowWidth < MIN_SIDE_TO_SIDE_WIDTH && visual != 'kmeans'}/>
             : null}
             <div className="optionsContainer" style={{
-                flexDirection: options.length === 2 ? 'row' : 'column', 
-                justifyContent: options.length === 2 ? 'space-between' : null
+                flexDirection: visual == 'kmeans' || options.length === 2 && windowWidth > MIN_SIDE_TO_SIDE_WIDTH ? 'row' : 'column',
+                alignItems: visual == 'kmeans' || windowWidth > MIN_SIDE_TO_SIDE_WIDTH ? 'start' : 'center'
             }}>
                 {options.map((text, key) => 
                     <Option 
@@ -31,7 +47,8 @@ export default function Question({question, eqPieces, visual, options, expandedO
                         expanded={key == selected} 
                         expandedText={expandedOptions[key]} 
                         correctness={correctness[key]}
-                        setSelected={() => setSelected(key)}> 
+                        setSelected={() => setSelected(key)} 
+                        >
                     </Option>)}
             </div>
         </div>

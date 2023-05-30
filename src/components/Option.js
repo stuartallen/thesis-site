@@ -19,8 +19,11 @@ export default function Option({text, expanded, expandedText, correctness, setSe
             style={expanded ? 
                 {backgroundColor: `${correctness ? `rgba(${255 * correctColor[0]}, ${255 * correctColor[1]}, ${255 * correctColor[2]}, 0.2)` 
                 : `rgba(${255 *incorrectColor[0]}, ${255 * incorrectColor[1]}, ${255 * incorrectColor[2]}, 0.2)`}`}: {}}>
-            {text}
-            {expanded ? <div className='expandedText'>{expandedText}</div> : null}
+            <div>{text}</div>
+            {expanded ? <div    className='expandedText' >
+                            {expandedText}
+                        </div> : 
+                        null}
         </div>
     </>)
 }

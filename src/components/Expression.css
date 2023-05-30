@@ -3,10 +3,12 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    width: 75%;
 }
 
 .label {
     position: absolute;
     z-index: 1;
     border: 0.5mm solid;
+    width: fit-content;
 }

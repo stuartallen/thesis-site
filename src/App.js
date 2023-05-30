@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import EMVWrapper from './components/EMVWrapper';
 import Question from './components/Question';
@@ -76,12 +76,24 @@ const equations = {
 }
 
 function App() {
+  const [ windowWidth, setWindowWidth] = useState(window.innerWidth)
+
+  const updateWindowWidth = () => {
+    setWindowWidth(window.innerWidth)
+  }
 
   const textColor = useColor('dark')
 
   useEffect(() => {
+    window.addEventListener('resize', updateWindowWidth)
+
     document.documentElement.style.setProperty('--text-color', textColor)
-  }, [])
+    document.documentElement.style.setProperty('--content-width', windowWidth < 600 ? '90%' : '75%')
+
+    return () => {
+        window.removeEventListener('resize', updateWindowWidth)
+    }
+  })
 
   return (
     <div className="App" style={{backgroundColor: useColor('light')}}>
