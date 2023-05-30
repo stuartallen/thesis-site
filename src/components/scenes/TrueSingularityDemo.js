@@ -9,7 +9,7 @@ import normalMixVertex from '../../shaders/vertex/normalMixVertex.js'
 import hexToRGB from '../../utils/hexToRGB'
 import useColor from '../../hooks/useColor'
 
-const NUM_POINTS = 100
+const NUM_POINTS = 50
 const thetas = [0.5, 0.5, 0.0]
 
 export default function TrueSingularityDemo() {

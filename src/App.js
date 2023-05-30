@@ -104,14 +104,14 @@ function App() {
         with our trails, as well as the coordinates of every recent mountain lion sighting. Our goal is to choose the trail where we are least
         likely to find a mountain lion.
       </div>
-      <img className='outerImg' src='updatedFirstExample.png' alt='An Image of Two Hiking Paths with Cougar Siting' />
+      <img className='outerImg' src='updatedFirstExample.png' alt='An Image of Two Hiking Paths with Cougar Sitings' />
       <div className='explanation'>
         How might we approach this problem? In some cases it may be trivial if sightings are clearly localized around a certain path. However,
         this will not always be the case. For example, suppose one path is much longer than another, and the shorter path goes directly through
         a cluster of sightings. While it's best to avoid going directly through a cluster of sightings, a longer path presents more opportunities
         to meet these creatures as well. How can we make a decision about which path to choose in these less than obvious situations?
       </div>
-      <img className='outerImg' src='updatedInconclusive.png' alt='Another Image of Two Hiking Paths with Cougar Siting' />
+      <img className='outerImg' src='updatedInconclusive.png' alt='Another Image of Two Hiking Paths with Cougar Sitings' />
       <div className='explanation'>
         What if we could approximate the relative likelihood of seeing a mountain lion at any point on our map? With that information we could take the sum of these
         relative likelihoods at each point along a path. This would give us a total probability of seeing a mountain lion for a certain path. Then we could
@@ -356,7 +356,7 @@ function App() {
         <p>
           As aforementioned, this process can continue until a local solution is achieved. A local solution does not guarantee a great 
           solution and it is therefore important to run the EM algorithm with many different initial distribution parameters. Different initializations for Gaussian Mixtures will be discussed later 
-          in this article.&nbsp;<a href='#bishop'>1]</a>
+          in this article.&nbsp;<a href='#bishop'>[1]</a>
         </p>
       </div>
       <div className='explanation'>
