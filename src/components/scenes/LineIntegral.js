@@ -4,6 +4,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 import normalMixFragment from '../../shaders/fragment/normalMixFragment'
 import normalMixVertex from '../../shaders/vertex/normalMixVertex.js'
+import Grid from './parts/Grid'
 
 import gaussian from '../../utils/gaussian'
 import hexToRGB from '../../utils/hexToRGB'
@@ -116,10 +117,7 @@ export default function LineIntegral() {
             </bufferGeometry>
             <meshBasicMaterial color={wire_color} side={THREE.DoubleSide} wireframe/>
         </mesh>
-        <mesh rotation-x={Math.PI * 0.5} position-z={0.1}>
-            <planeGeometry attach={"geometry"} args={[10, 10, 10, 10]}/>
-            <meshBasicMaterial color={wire_color} wireframe />
-        </mesh>
+        <Grid />
     </>)
 }
 

@@ -8,6 +8,7 @@ import normalMixVertex from '../../shaders/vertex/normalMixVertex.js'
 import gaussian from '../../utils/gaussian.js'
 import hexToRGB from '../../utils/hexToRGB.js'
 import useColor from '../../hooks/useColor.js'
+import Grid from './parts/Grid.js'
 
 extend({OrbitControls})
 
@@ -24,10 +25,7 @@ export default function NormalMix() {
     return (<>
         <orbitControls args={[camera, gl.domElement]} enableZoom={false} enablePan={false}/>    
 
-        <mesh rotation-x={Math.PI * -0.5} position-y={-0.1}>
-            <planeGeometry args={[10, 10, 20, 20]}/>
-            <meshBasicMaterial color={useColor('dark')} wireframe side={THREE.DoubleSide}/>
-        </mesh>
+        <Grid />
 
         <mesh rotation-x={Math.PI * 0.5}>
             <planeGeometry attach={"geometry"} args={[10, 10, 64, 64]}/>

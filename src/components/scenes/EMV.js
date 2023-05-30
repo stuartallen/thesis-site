@@ -5,6 +5,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import LiveNormals from "./parts/LiveNormals";
 import useColor from "../../hooks/useColor";
 import Datapoints from "./parts/Datapoints";
+import Grid from "./parts/Grid";
 
 extend({OrbitControls})
 
@@ -15,10 +16,7 @@ const EMV = ({dataset, means, weights, covs}) => {
         <>
             <orbitControls args={[camera, gl.domElement]} enableZoom={false} enablePan={false}/>
             
-            <mesh rotation-x={Math.PI * -0.5} position-y={-0.1}>
-                <planeGeometry args={[10, 10, 20, 20]}/>
-                <meshBasicMaterial color={useColor('dark')} wireframe side={THREE.DoubleSide}/>
-            </mesh>
+            <Grid />
 
             <Datapoints dataset={dataset}/>
             

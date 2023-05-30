@@ -8,6 +8,7 @@ import normalMixFragment from '../../shaders/fragment/normalMixFragment'
 import normalMixVertex from '../../shaders/vertex/normalMixVertex.js'
 import hexToRGB from '../../utils/hexToRGB'
 import useColor from '../../hooks/useColor'
+import Grid from './parts/Grid'
 
 const NUM_POINTS = 100
 const thetas = [0.5, 0.5, 0]
@@ -42,10 +43,7 @@ export default function TrueCovarianceDemo() {
     return (<>
         <orbitControls args={[camera, gl.domElement]} enableZoom={false} enablePan={false}/>
 
-        <mesh rotation-x={Math.PI * 0.5} position-z={0.1}>
-            <planeGeometry attach={"geometry"} args={[10, 10, 10, 10]}/>
-            <meshBasicMaterial color={[point_color]} wireframe />
-        </mesh>
+        <Grid />
 
         <points>
             <bufferGeometry attach={'geometry'}>

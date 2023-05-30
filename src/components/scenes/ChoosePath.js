@@ -8,6 +8,7 @@ import normalMixVertex from '../../shaders/vertex/normalMixVertex.js'
 import gaussian from '../../utils/gaussian'
 import hexToRGB from '../../utils/hexToRGB'
 import useColor from '../../hooks/useColor'
+import Grid from './parts/Grid'
 
 extend({OrbitControls})
 
@@ -106,10 +107,6 @@ const Path = ({x, x_inv, y, color}) => {
                 </bufferGeometry>
                 <meshBasicMaterial color={wire_color} side={THREE.DoubleSide} wireframe/>
             </mesh>
-            <mesh rotation-x={Math.PI * 0.5} position-z={0.1}>
-                <planeGeometry attach={"geometry"} args={[10, 10, 10, 10]}/>
-                <meshBasicMaterial color={wire_color} side={THREE.DoubleSide} wireframe/>
-            </mesh>
         </>
     )
 }
@@ -182,10 +179,7 @@ export default function ChoosePath() {
        <Path x={x} x_inv={x_inv} y={y_1} color={path_1_color}/>
        <Path x={x} x_inv={x_inv} y={y_2} color={path_2_color}/>
        <Path x={x} x_inv={x_inv} y={y_3} color={path_3_color}/>
-       <mesh rotation-x={Math.PI * 0.5} position-z={0.1}>
-            <planeGeometry attach={"geometry"} args={[10, 10, 10, 10]}/>
-            <meshBasicMaterial color={wire_color} wireframe />
-        </mesh>
+       <Grid />
     </>)
 }
 
