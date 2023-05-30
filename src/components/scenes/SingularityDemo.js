@@ -10,7 +10,7 @@ import hexToRGB from '../../utils/hexToRGB'
 import useColor from '../../hooks/useColor'
 
 const NUM_POINTS = 100
-const thetas = [0.49, 0.49, 0.02]
+const thetas = [0.48, 0.48, 0.04]
 
 export default function SingularityDemo() {
     const downScale = 1

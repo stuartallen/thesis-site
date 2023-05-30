@@ -59,3 +59,12 @@ iframe {
   width: 100%;
   height: 100px;
 }
+
+.keyword {
+  font-weight: bold;
+  width: fit-content;
+}
+
+a {
+  color: gray;
+}

@@ -92,14 +92,14 @@ function App() {
         with our trails, as well as the coordinates of every recent mountain lion sighting. Our goal is to choose the trail where we are least
         likely to find a mountain lion.
       </div>
-      <img className='outerImg' src='firstExample.png' alt='An Image of Two Hiking Paths with Cougar Siting' />
+      <img className='outerImg' src='updatedFirstExample.png' alt='An Image of Two Hiking Paths with Cougar Siting' />
       <div className='explanation'>
         How might we approach this problem? In some cases it may be trivial if sightings are clearly localized around a certain path. However,
         this will not always be the case. For example, suppose one path is much longer than another, and the shorter path goes directly through
         a cluster of sightings. While it's best to avoid going directly through a cluster of sightings, a longer path presents more opportunities
         to meet these creatures as well. How can we make a decision about which path to choose in these less than obvious situations?
       </div>
-      <img className='outerImg' src='inconclusive1.png' alt='Another Image of Two Hiking Paths with Cougar Siting' />
+      <img className='outerImg' src='updatedInconclusive.png' alt='Another Image of Two Hiking Paths with Cougar Siting' />
       <div className='explanation'>
         What if we could approximate the relative likelihood of seeing a mountain lion at any point on our map? With that information we could take the sum of these
         relative likelihoods at each point along a path. This would give us a total probability of seeing a mountain lion for a certain path. Then we could
@@ -130,7 +130,9 @@ function App() {
       </div>
       <Screen scene={"singleGaussianDiagonal"}/>
       <div className='explanation'>
-        More formula a multivariate Gaussian has the following probability density function at any point x, in a distribution with d dimensions:
+        <p>
+          More formally a multivariate Gaussian has the following probability density function at any point x, in a distribution with d dimensions as written below.&nbsp;<a href='#bishop'>[1]</a>
+        </p>
       </div>
       <Expression pieces={equations.MVGFormula}/>
       <div className='explanation'>
@@ -145,20 +147,24 @@ function App() {
       </div>
       <Screen scene={"normalMix"}/>
       <div className='explanation'>
-        A multivariate Gaussian mixture model has the probability density function:
+        A multivariate Gaussian mixture model has the probability density function below.&nbsp;<a href='#bishop'>[1]</a>
       </div>
       <Expression pieces={equations.MVGMMFormula}/>
-      <div className='explanation'>
-        All Gaussian mixture models are density estimators, meaning they describe how relatively likely a particular point is. We will use multivariate 
-        Gaussian mixtures to find a good density estimator of the likelihood of seeing a mountain lion at any point on our map.
+      <div className='explanation' id='densityEstimator'>
+        <p>
+          All Gaussian mixture models are <strong>density estimators</strong>, meaning they describe how relatively likely a particular point is. We will use multivariate 
+          Gaussian mixtures to find a good density estimator of the likelihood of seeing a mountain lion at any point on our map.
+        </p>
       </div>
 
-      <h3>Evaluating the Fit of a Gaussian Mixture</h3>
+      <h3 id="logLikelihood">Evaluating the Fit of a Gaussian Mixture</h3>
 
       <div className='explanation'>
-        The fit of a Gaussian mixture can be measured in many ways, but a popular choice is the log likelihood expression. The log likelihood is simply
-        the log of the product of the probability of each data point in a dataset, given our distribution parameters. For Gaussain mixture models the log
-        likelihood expression can be written:
+        <p>
+          The fit of a Gaussian mixture can be measured in many ways, but a popular choice is the <strong>log likelihood expression</strong>. The log likelihood is simply
+          the log of the product of the probability of each data point in a dataset, given our distribution parameters. For Gaussain mixture models the log
+          likelihood expression can be written as below.&nbsp;<a href='#bishop'>[1]</a>
+        </p>
       </div>
       <Expression pieces={equations.GMMLL}/>
       <div className='explanation'>
@@ -210,7 +216,7 @@ function App() {
         correctness={[false, true]}
       />
 
-      <h3>Finding The Probability Of A Sighting Along A Path, Line Integrals Along A Gaussain Mixture</h3>
+      <h3 id='lineIntegral'>Finding The Probability Of A Sighting Along A Path, Line Integrals Along A Gaussain Mixture Model</h3>
       <div className='explanation'>
         Now that we understand the kind of distribution our mountain lions sightings will follow, we can now find the probability of seeing a mountain
         lion on our observed path. We deduced earlier that if we take the sum of all the probabilities along one path, we would know the total probability
@@ -226,16 +232,18 @@ function App() {
         Now that we know what quantity we need given our Gaussian mixture model, all we need is to find which Gaussian mixture model works best for our data set.
       </div>
 
-      <h3>Why Gaussian Mixtures Cannot Be Learned Directly</h3>
+      <h3 id='MLE'>Why Gaussian Mixtures Cannot Be Learned Directly</h3>
 
       <div className='explanation'>
-        As we are only given the locations of mountain lion sightings, we must find a Gaussian mixture that best represents these sightings in order to
-        build our density estimator. A typical method of learning the parameters of a distribution is maximum likelihood estimation
-        (MLE). Many machine learning problems can be solved through directly maximizing the log-likelihood expression. If our data is independent, meaning one mountain lion sighting does not influence another, the likelihood function of our
-        data is a product of the likelihood of each data point given our distribution parameters: the mean and covariance. The log-likelihood is a useful expression as it is a 
-        monotonic function and therefore retains the same local and global maximums and minimums. Additionally, the log likelihood of a product usually reduces 
-        to a sum which leads to a drastically simpler expression when applying the derivative operator with respect to one of a model’s parameters. In 
-        many cases such as linear regression, a closed form solution is possible. Answer the following question to observe why this is not the case for optimizing Gaussian mixture models.
+        <p>
+          As we are only given the locations of mountain lion sightings, we must find a Gaussian mixture that best represents these sightings in order to
+          build our <a href='#densityEstimator'>density estimator</a>. A typical method of learning the parameters of a distribution is <strong>maximum likelihood estimation</strong>
+          &nbsp;(MLE). Many machine learning problems can be solved through directly maximizing the <a href='#logLikelihood'>log likelihood expression</a>. If our data is independent, meaning one mountain lion sighting does not influence another, the likelihood function of our
+          data is a product of the likelihood of each data point given our distribution parameters: the mean and covariance. The log likelihood is a useful expression as it is a 
+          monotonic function and therefore retains the same local and global maximums and minimums. Additionally, the log likelihood of a product usually reduces 
+          to a sum which leads to a drastically simpler expression when applying the derivative operator with respect to one of a model’s parameters. In 
+          many cases such as linear regression, a closed form solution is possible. Answer the following question to observe why this is not the case for optimizing Gaussian mixture models.
+        </p>
       </div>
 
       <Question 
@@ -255,19 +263,23 @@ function App() {
       />
 
       <div className='explanation'>
-        In the case of directly optimizing Gaussian mixture models our log-likelihood function yields a summation dependent on every parameter within a logarithm. A 
-        summation inside of a log is not as easily separable as a product. Our optimization then leads to not only a system of nonlinear equations, but also 
-        has no closed form solution. This means we cannot build the best density estimator as some operation of our data set, nor can we know the best Gaussian mixture that 
-        predicts the probability of seeing a mountain lion over our whole map. This motivates the use of an algorithm that can optimize our distribution parameters instead of 
-        one mathematical expression.
+        <p>
+          In the case of directly optimizing Gaussian mixture models our log likelihood expression yields a summation dependent on every parameter within a logarithm. A 
+          summation inside of a log is not as easily separable as a product. Our optimization then leads to not only a system of nonlinear equations, but also 
+          has no closed form solution.&nbsp;<a href='#bishop'>[1]</a> This means we cannot build the best density estimator as some operation of our data set, nor can we know the best Gaussian mixture that 
+          predicts the probability of seeing a mountain lion over our whole map. This motivates the use of an algorithm that can optimize our distribution parameters instead of 
+          one mathematical expression.
+        </p>
       </div>
 
-      <h3>The Expectation Maximization Algorithm</h3>
+      <h3 id='EM'>The Expectation Maximization Algorithm</h3>
       <div className='explanation'>
-        We have shown why it is impossible to directly optimize Gaussian Mixtures with MLE, however, we can use the Expectation Maximization (EM) algorithm to 
-        solve this problem. The EM algorithm in general is a form of coordinate descent, meaning that we update some of a problem's parameters, but we hold others constant. 
-        In general, the EM algorithm holds parameters for a target distribution constant, when trying to learn another latent variable, then vice 
-        versa. The EM algorithm is guaranteed to reach a local solution after repeatedly taking turns optimizing the latent variables and other parameters.
+        <p>
+          We have shown why it is impossible to directly optimize Gaussian Mixtures with <a href='#MLE'>MLE</a>, however, we can use the Expectation Maximization (EM) algorithm to 
+          solve this problem. The EM algorithm in general is a form of coordinate descent, meaning that we update some of a problem's parameters, but we hold others constant. 
+          In general, the EM algorithm holds parameters for a target distribution constant, when trying to learn another latent variable, then vice 
+          versa. The EM algorithm is guaranteed to reach a local solution after repeatedly taking turns optimizing the latent variables and other parameters.
+        </p>
       </div>
       <div className='explanation'>
         In order to take advantage of the Expectation Maximization algorithm, we must introduce our latent variable. Suppose we have a Gaussian mixture with 3 individual 
@@ -275,8 +287,10 @@ function App() {
         was created by an individual distribution. For example one particular sighting can have a 20% likelihood of coming from the first individual normal distribution, 30% for the
         second, and 50% for the third. These probabilities will always add up to 100%.
       </div>
-      <div className='explanation'>
-        More formally this latent variable is called the soft assignment. The expression below represents the soft assignment asosciated with each data point, x.
+      <div id='softAssignment' className='explanation'>
+        <p>
+          More formally this latent variable is called the <strong>soft assignment</strong>. The expression below represents the soft assignment asosciated with each data point, x.
+        </p>
       </div>
       <Expression pieces={equations.SoftAssignments}/>
       <div className='explanation'>
@@ -326,9 +340,12 @@ function App() {
         correctness={[true, false, false]}
       />
       
-      <div className='explanation'>As aforementioned, this process can continue until a local solution is achieved. A local solution does not guarantee a great 
-        solution and it is therefore important to run the EM algorithm with many different initial distribution parameters. Different initializations for Gaussian Mixtures will be discussed later 
-        in this article.
+      <div className='explanation'>
+        <p>
+          As aforementioned, this process can continue until a local solution is achieved. A local solution does not guarantee a great 
+          solution and it is therefore important to run the EM algorithm with many different initial distribution parameters. Different initializations for Gaussian Mixtures will be discussed later 
+          in this article.&nbsp;<a href='#bishop'>1]</a>
+        </p>
       </div>
       <div className='explanation'>
         Experiment with the below visualization of the EM algorithm to ensure you understand. Be sure to step forward, backward, and reinitialize the visualization to
@@ -345,9 +362,9 @@ function App() {
       </div>
       <div className='explanation'>
         <ol>
-          <li>Use the EM algorithm to learn a density estimator of our data set (positions of mountain lion sightings).</li>
-          <li>Run the EM algorithm multiple times to ensure we have a density estimator that is representative of our dataset.</li>
-          <li>Approximate the integral along each path using Reimann sums. This is our likelihood of seeing a mountain lion on this path.</li>
+          <li>Use the <a href='#EM'>EM algorithm</a> to learn a <a href='#densityEstimator'>density estimator</a> of our data set (positions of mountain lion sightings).</li>
+          <li>Run the EM algorithm with multiple initializations to ensure we have a density estimator that is representative of our dataset.</li>
+          <li>Approximate the <a href='#lineIntegral'>line integral</a> along each path using Reimann sums. This is our likelihood of seeing a mountain lion on this path.</li>
           <li>Compare the likelihood of seeing a mountain lion on each path.</li>
         </ol>
       </div>
@@ -368,10 +385,12 @@ function App() {
       <h3>Gaussian Mixture Models as a Clustering Algorithm</h3>
 
       <div className='explanation'>
-        In our problem, we used Gaussian mixture models as a density estimator. However, our soft assignment latent variable in the EM algorithm also reflects the partial
-        assignments of each data point to an individual distribution. That is the probability for each point that it came from a particular cluster. These
-        can be turned into hard assignments by choosing the index of the highest probability for each data point. This can be useful as not all clustering
-        algorithms take covariance into account when segmenting data. For example, K-means is one such algorithm that does not take covariance into account when clustering data.
+        <p>
+          In our problem, we used Gaussian mixture models as a density estimator. However, our <a href='#softAssignment'>soft assignment</a> latent variable in the EM algorithm also reflects the partial
+          assignments of each data point to an individual distribution. That is the probability for each point that it came from a particular cluster. These
+          can be turned into hard assignments by choosing the index of the highest probability for each data point. This can be useful as not all clustering
+          algorithms take covariance into account when segmenting data. For example, K-means is one such algorithm that does not take covariance into account when clustering data.
+        </p>
       </div>
 
       <Question
@@ -394,7 +413,7 @@ function App() {
       <h3>Initialization Strategies</h3>
 
       <div className='explanation'>
-        Different initialization choice can have great effect on the result of a Gaussian mixture as the EM algorithm is only guaranteed to find a local solution. The covariance
+        Different initialization choices can have great effect on the result of a Gaussian mixture as the EM algorithm is only guaranteed to find a local solution. The covariance
         and weight for each normal distribution can be initialized as the identity matrix and equal weighting, or a similar psuedorandom value. For mean initializations, it is possible
         to choose random points within the bounds of the data set or random points in the data set. It is also possible to choose an existing point, weight the likelihood of choosing
         each successive point by which points have already been chosen (further points being more likely), and continue this cycle until all means are initialized. This method
@@ -404,6 +423,12 @@ function App() {
       <h2>Acknowledgements</h2>
 
       <h3>Works Cited</h3>
+
+      <div className='explanation' id='bishop'>
+        <p>
+          <strong>[1]</strong> C. M. Bishop, Pattern recognition and machine learning. Springer, 2016.
+        </p>
+      </div>
 
       <h3>Authorship</h3>
 
