@@ -57,14 +57,14 @@ const QuestionScreen = ({visualName, visible, setVisible, column}) => {
                             position: [0, 3, 9]
                         }}
                         >
-                            <ClusterNumberDemo />
+                            {/* <ClusterNumberDemo /> */}
                         </Canvas> 
                         <Canvas
                         camera={{
                             position: [0, 3, 9]
                         }}
                         >
-                            <TrueClusterNumberDemo />
+                            {/* <TrueClusterNumberDemo /> */}
                         </Canvas> 
                     </>
                 : visualName === 'choosePath' ? 

@@ -10,7 +10,7 @@ import hexToRGB from '../../utils/hexToRGB'
 import useColor from '../../hooks/useColor'
 
 const NUM_POINTS = 50
-const thetas = [0.48, 0.48, 0.04]
+const thetas = [0.5, 0.5, 0.0]
 
 export default function SingularityDemo() {
     const downScale = 1
@@ -72,17 +72,17 @@ export default function SingularityDemo() {
                     uMean1: {value: gauss1[0]},
                     uDeterminant1: {value: gauss1[1]},
                     uInverseCovariance1: {value: gauss1[2]},
-                    uTheta1: {value: thetas[0]},
+                    uTheta1: {value: 0.48},
 
                     uMean2: {value: gauss2[0]},
                     uDeterminant2: {value: gauss2[1]},
                     uInverseCovariance2: {value: gauss2[2]},
-                    uTheta2: {value: thetas[1]},
+                    uTheta2: {value: 0.48},
 
                     uMean3: {value: gauss3[0]},
                     uDeterminant3: {value: gauss3[1]},
                     uInverseCovariance3: {value: gauss3[2]},
-                    uTheta3: {value: thetas[2]},
+                    uTheta3: {value: 0.04},
 
                     BOTTOM_COLOR: {value: bottom_color},
                     TOP_COLOR: {value: top_color},
