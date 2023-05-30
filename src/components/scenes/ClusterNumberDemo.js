@@ -34,7 +34,6 @@ export default function ClusterNumberDemo() {
             dataPositions.push(sample[0], 0, -sample[1])
         }
     }
-    dataPositions.push(4.5, 0, -4.5)
     const dataPositionsArr = new Float32Array(dataPositions)
 
     const bottom_color = hexToRGB(useColor('cluster3'))
@@ -54,7 +53,7 @@ export default function ClusterNumberDemo() {
                 <bufferAttribute 
                     attach={"attributes-position"}
                     array={dataPositionsArr}
-                    count={NUM_POINTS + 1}
+                    count={NUM_POINTS}
                     itemSize={3}
                 />
             </bufferGeometry>

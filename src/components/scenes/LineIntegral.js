@@ -118,7 +118,7 @@ export default function LineIntegral() {
         </mesh>
         <mesh rotation-x={Math.PI * 0.5} position-z={0.1}>
             <planeGeometry attach={"geometry"} args={[10, 10, 10, 10]}/>
-            <meshBasicMaterial color={wire_color} />
+            <meshBasicMaterial color={wire_color} wireframe />
         </mesh>
     </>)
 }
