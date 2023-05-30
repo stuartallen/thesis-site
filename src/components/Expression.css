@@ -8,7 +8,6 @@
 
 .label {
     position: absolute;
-    z-index: 1;
     border: 0.5mm solid;
     width: fit-content;
 }

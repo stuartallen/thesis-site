@@ -86,3 +86,12 @@ a {
   padding: 10px;
   margin: 10px;
 }
+
+.equations {
+  height: 500px;
+  width: var(--content-width);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
