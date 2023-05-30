@@ -10,6 +10,7 @@ import hexToRGB from '../../utils/hexToRGB'
 import useColor from '../../hooks/useColor'
 
 const NUM_POINTS = 50
+//  These will not be the singularity thetas, they are just used to generate points
 const thetas = [0.5, 0.5, 0.0]
 
 export default function SingularityDemo() {

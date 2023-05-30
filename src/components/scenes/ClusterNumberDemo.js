@@ -10,6 +10,7 @@ import hexToRGB from '../../utils/hexToRGB'
 import useColor from '../../hooks/useColor'
 
 const NUM_POINTS = 50
+const generatePointsThetas = [0.5, 0.5]
 const thetas = [0.3, 0.45, 0.25]
 
 export default function ClusterNumberDemo() {
@@ -24,11 +25,11 @@ export default function ClusterNumberDemo() {
     const dists = [ gauss1, gauss2, gauss3 ]
 
     let dataPositions = []
-    for(let i = 0; i < 2; i++) {
+    for(let i = 0; i < 3; i++) {
         const dist = dists[i]
         var mv = MultivariateNormal(dist[0], [[dist[3][0], dist[3][1]], [dist[3][2], dist[3][3]]])
 
-        for(let j = 0; j < NUM_POINTS * thetas[i]; j++) {
+        for(let j = 0; j < NUM_POINTS * generatePointsThetas[i]; j++) {
             const sample = mv.sample()
             dataPositions.push(sample[0], 0, -sample[1])
         }

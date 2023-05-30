@@ -10,7 +10,7 @@ import hexToRGB from '../../utils/hexToRGB'
 import useColor from '../../hooks/useColor'
 
 const NUM_POINTS = 50
-const thetas = [0.3, 0.45, 0.0]
+const thetas = [0.5, 0.5, 0.0]
 
 export default function TrueClusterNumberDemo() {
     const downScale = 3.0
@@ -24,7 +24,7 @@ export default function TrueClusterNumberDemo() {
     const dists = [ gauss1, gauss2, gauss3 ]
 
     let dataPositions = []
-    for(let i = 0; i < 2; i++) {
+    for(let i = 0; i < 3; i++) {
         const dist = dists[i]
         var mv = MultivariateNormal(dist[0], [[dist[3][0], dist[3][1]], [dist[3][2], dist[3][3]]])
 
