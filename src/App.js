@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import EMVWrapper from './components/EMVWrapper';
 import Question from './components/Question';
+import { isMobile, isChrome } from 'react-device-detect';
 
 //  My components
 import Screen from './components/Screen';
@@ -95,6 +95,10 @@ function App() {
     }
   })
 
+  //  Literally every browser except chrome can support the number of canvases we need
+  const isChromeMobile = isChrome && isMobile
+  const [renderedCanvas, setRenderedCanvas] = useState(-1)
+
   return (
     <div className="App" style={{backgroundColor: useColor('light')}}>
       <h1>An Introduction to Gaussian Mixture Models</h1>
@@ -134,13 +138,31 @@ function App() {
         distribution has many similarities to its one dimensional counterpart. It has a mean where most of the highest values of the function are centered
         around, as well as a covariance matrix that describes how spread the values of the function are.
       </div>
-      <Screen scene={"singleGaussian"}/>
+
+      {isChromeMobile ? 
+        renderedCanvas ===  0 ?
+          <Screen scene={"singleGaussian"}/> 
+          :
+          <div className='beginVis' onClick={() => setRenderedCanvas(0)}>Click to begin visualization</div>
+        :
+        <Screen scene={"singleGaussian"}/> 
+      }
+
       <div className='explanation'>
         Mutlidimensional Gaussian distributions also have covariance properties. This means the spread of the function may be circular, longer with respect to one
         axis, or diagonal. The flexibility of multivariate Gaussian distribution's mean and covariance parameters makes them useful for our problem. For example, the sightings
         of one particular mountain lion on a map may well follow a distribution like this.
       </div>
-      <Screen scene={"singleGaussianDiagonal"}/>
+      
+      {isChromeMobile ? 
+        renderedCanvas ===  1 ?
+          <Screen scene={"singleGaussianDiagonal"}/> 
+          :
+          <div className='beginVis' onClick={() => setRenderedCanvas(1)}>Click to begin visualization</div>
+        :
+        <Screen scene={"singleGaussianDiagonal"}/> 
+      }
+      
       <div className='explanation'>
         <p>
           More formally a multivariate Gaussian has the following probability density function at any point x, in a distribution with d dimensions as written below.&nbsp;<a href='#bishop'>[1]</a>
@@ -157,7 +179,16 @@ function App() {
       <div className='explanation'>
         As well as a multivariate Gaussian mixture:
       </div>
-      <Screen scene={"normalMix"}/>
+
+      {isChromeMobile ? 
+        renderedCanvas ===  2 ?
+          <Screen scene={"normalMix"}/> 
+          :
+          <div className='beginVis' onClick={() => setRenderedCanvas(2)}>Click to begin visualization</div>
+        :
+        <Screen scene={"normalMix"}/> 
+      }
+
       <div className='explanation'>
         A multivariate Gaussian mixture model has the probability density function below.&nbsp;<a href='#bishop'>[1]</a>
       </div>
@@ -206,6 +237,10 @@ function App() {
           'Incorrect. Using at least one non-circular distribution would better reflect how spread these data points are.'
         ]}
         correctness={[true, false]}
+        isChromeMobile={isChromeMobile}
+        setRenderedCanvas={setRenderedCanvas}
+        canvasNum={3}
+        renderedCanvas={renderedCanvas}
       />
       <Question 
         question={'Each point on the grid below represents one data point in a data set. Which density estimator fits this data set better?'}
@@ -216,6 +251,10 @@ function App() {
           'Correct. This model does not overrepresent outliers in a data set.'
         ]}
         correctness={[false, true]}
+        isChromeMobile={isChromeMobile}
+        setRenderedCanvas={() => setRenderedCanvas(4)}
+        canvasNum={4}
+        renderedCanvas={renderedCanvas}
       />
       <Question
         question={'Each point on the grid below represents one data point in a data set. Which density estimator fits this data set better?'}
@@ -226,6 +265,10 @@ function App() {
           'Correct. Using only two individual distributions represents that this data set has points localized around two areas.'
         ]}
         correctness={[false, true]}
+        isChromeMobile={isChromeMobile}
+        setRenderedCanvas={() => setRenderedCanvas(5)}
+        canvasNum={5}
+        renderedCanvas={renderedCanvas}
       />
 
       <h3 id='lineIntegral'>Finding The Probability Of A Sighting Along A Path, Line Integrals Along A Gaussain Mixture Model</h3>
@@ -238,7 +281,14 @@ function App() {
         underneath into trapezoids. This more generally known as a Reimann sum approximation. Below is a visualization of the an approximate line integral
         over a Gaussian mixture, where the area of the orange cross section represents our desired probability:
       </div>
-      <Screen scene={"lineIntegral"}/>
+      {isChromeMobile ? 
+        renderedCanvas ===  6 ?
+          <Screen scene={"lineIntegral"}/> 
+          :
+          <div className='beginVis' onClick={() => setRenderedCanvas(6)}>Click to begin visualization</div>
+        :
+        <Screen scene={"lineIntegral"}/> 
+      }
 
       <div className='explanation'>
         Now that we know what quantity we need given our Gaussian mixture model, all we need is to find which Gaussian mixture model works best for our data set.
@@ -364,7 +414,14 @@ function App() {
         see the effect of different initializations and data sets.
       </div>
 
-      <Screen scene={"emVisualization"}/>    
+      {isChromeMobile ? 
+        renderedCanvas ===  7 ?
+          <Screen scene={"emVisualization"}/> 
+          :
+          <div className='beginVis' onClick={() => setRenderedCanvas(7)}>Click to begin visualization</div>
+        :
+        <Screen scene={"emVisualization"}/> 
+      }
 
       <h3>Solving for the Best Path</h3>
 

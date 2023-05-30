@@ -7,7 +7,7 @@ import QuestionScreen from "./QuestionScreen";
 
 const MIN_SIDE_TO_SIDE_WIDTH = 700
 
-export default function Question({question, eqPieces, visual, options, expandedOptions, correctness}) {
+export default function Question({question, eqPieces, visual, options, expandedOptions, correctness, isChromeMobile, setRenderedCanvas, canvasNum, renderedCanvas}) {
     const [selected, setSelected] = useState(-1)
     const [visible, setVisible] = useState(false)
     const [ windowWidth, setWindowWidth] = useState(window.innerWidth)
@@ -34,7 +34,16 @@ export default function Question({question, eqPieces, visual, options, expandedO
             {visual ? 
                 visual == 'kmeans' ? 
                     <img src={'/newClusters.jpg'} className="questionImg"/>
-                : <QuestionScreen visualName={visual} visible={visible} setVisible={setVisible} column={windowWidth < MIN_SIDE_TO_SIDE_WIDTH && visual != 'kmeans'}/>
+                : <QuestionScreen 
+                    visualName={visual} 
+                    visible={visible} 
+                    setVisible={setVisible} 
+                    column={windowWidth < MIN_SIDE_TO_SIDE_WIDTH && visual != 'kmeans'} 
+                    isChromeMobile={isChromeMobile} 
+                    setRenderedCanvas={setRenderedCanvas}
+                    canvasNum={canvasNum}
+                    renderedCanvas={renderedCanvas}
+                    />
             : null}
             <div className="optionsContainer" style={{
                 flexDirection: visual == 'kmeans' || options.length === 2 && windowWidth > MIN_SIDE_TO_SIDE_WIDTH ? 'row' : 'column',

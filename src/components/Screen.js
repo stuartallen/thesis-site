@@ -20,12 +20,11 @@ const Screen = ({scene}) => {
         )
     }
 
-    const backgroundColor = useColor('light')
     const borderColor = useColor('dark')
 
     return (
         <>
-            <div className="screenContainer" style={{backgroundColor: backgroundColor, borderColor: borderColor}}>
+            <div className="screenContainer" style={{borderColor: borderColor}}>
                     {scene === "emVisualization" ? 
                         needsLoadEMVis ? 
                             <Loading /> :
@@ -37,7 +36,6 @@ const Screen = ({scene}) => {
                                 position: [0, 3, 9]
                             }}
                         >
-                            <color attach={"background"} args={[backgroundColor]}/>
                             {scene === "normalMix" ?
                                 <NormalMix /> :
                                 scene === "lineIntegral" ? 
@@ -48,6 +46,10 @@ const Screen = ({scene}) => {
                                                     <SingleGaussian covariance={[4.0, -1.0, 2.0, 3.0]} />
                                                     : null
                             }
+                            {/* <mesh>
+                                <boxGeometry />
+                                <meshBasicMaterial color={'blue'}/>
+                            </mesh> */}
                         </Canvas>
                     </>}
             </div>

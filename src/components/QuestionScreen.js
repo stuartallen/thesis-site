@@ -11,12 +11,14 @@ import useColor from "../hooks/useColor";
 import TrueSingularityDemo from "./scenes/TrueSingularityDemo";
 import TrueClusterNumberDemo from "./scenes/TrueClusterNumberDemo";
 
-const QuestionScreen = ({visualName, visible, setVisible, column}) => {
+const QuestionScreen = ({visualName, setVisible, column, isChromeMobile, setRenderedCanvas, canvasNum, renderedCanvas}) => {
 
     return (
         <>
             <div className="visual" style={{flexDirection: column ? 'column' : 'row'}}>
-                {visualName === 'covarianceDemo' ?
+                { isChromeMobile && canvasNum != renderedCanvas ?
+                    <div className='innerBeginVis' onClick={() => setRenderedCanvas(canvasNum)}>Click to begin visualization</div>
+                : visualName === 'covarianceDemo' ?
                     <>
                         <Canvas
                         camera={{
