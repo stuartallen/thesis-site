@@ -8,6 +8,7 @@ import EMVisualizationWrapper from "./EMVisualizationWrapper";
 import SingleGaussian from "./scenes/SingleGaussian";
 import useColor from "../hooks/useColor";
 import EMVWrapper from "./EMVWrapper";
+import TitleImage from "./scenes/TitleImage";
 
 const Screen = ({scene}) => {
     const [needsLoadEMVis, setNeedsLoadEMVis] = useState(false)
@@ -43,13 +44,11 @@ const Screen = ({scene}) => {
                                         scene === "singleGaussian" ? 
                                             <SingleGaussian covariance={[1.0, 0.0, 0.0, 1.0]} /> : 
                                                 scene === "singleGaussianDiagonal" ? 
-                                                    <SingleGaussian covariance={[4.0, -1.0, 2.0, 3.0]} />
-                                                    : null
+                                                    <SingleGaussian covariance={[4.0, -1.0, 2.0, 3.0]} /> :
+                                                        scene === 'titleImage' ? 
+                                                            <TitleImage/> : 
+                                                            null
                             }
-                            {/* <mesh>
-                                <boxGeometry />
-                                <meshBasicMaterial color={'blue'}/>
-                            </mesh> */}
                         </Canvas>
                     </>}
             </div>

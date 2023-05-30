@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import Question from './components/Question';
 import { isMobile, isChrome } from 'react-device-detect';
+import { Canvas } from '@react-three/fiber';
 
 //  My components
 import Screen from './components/Screen';
 import useColor from './hooks/useColor';
 import Expression from './components/Expression';
+import TitleImage from './components/scenes/TitleImage';
 
 //  Equation data
 const equations = {
@@ -102,6 +104,17 @@ function App() {
   return (
     <div className="App" style={{backgroundColor: useColor('light')}}>
       <h1>An Introduction to Gaussian Mixture Models</h1>
+      {!isChromeMobile ? 
+        <div>
+          <Canvas
+                            camera={{
+                                position: [0, 3, 9]
+                            }}
+                        >
+            <TitleImage />
+          </Canvas>
+        </div>
+      : null}
       <h3>Our example problem, Avoiding Mountain Lions</h3>
       <div className='explanation'>
         Suppose we are beginning a hike through a region known for its mountain lions. At the beginning of our trek, we have access to a map
@@ -261,7 +274,7 @@ function App() {
         visual={'clusterNumberDemo'}
         options={['Left', 'Right']}
         expandedOptions={
-          ['Incorrect. Given the data set points are localized around two areas. This could be better represented by two individual distributions, rather than 3.',
+          ['Incorrect. Given the data set points are localized around two areas. This could be better represented by two individual distributions, rather than three.',
           'Correct. Using only two individual distributions represents that this data set has points localized around two areas.'
         ]}
         correctness={[false, true]}
@@ -376,7 +389,7 @@ function App() {
       />
 
       <div className='explanation'>
-        We must also make the realization that it is trivial to calculate an update of our guassian mixtures' distribution parameters given our probability assignments. This is called the maximization step. The weight assosciated
+        We must also make the realization that it is trivial to calculate an update of our guassian mixture model's distribution parameters given our probability assignments. This is called the maximization step. The weight assosciated
         with a single distribution can be calculated as the mean probability assignment for that point. The mean for a single distribution can be calculated by taking a weighted average of
         our sighting positions in relation to the probability assignment for that specific distribution at each point. The covariance matrix can be calculated in much the same way, as a weighted
         sum of the difference between each sighting position and the single distributions mean, in relation to the probability assignment of that point. More formally, our distribution parameters

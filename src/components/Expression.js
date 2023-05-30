@@ -8,7 +8,7 @@ import { useEffect } from "react";
 const Expression = ({ pieces }) => {
     const [ windowWidth, setWindowWidth] = useState(window.innerWidth)
     const [ visibleHover, setVisibleHover] = useState(-1)
-    let scale = window.innerWidth < 350 ? 0.4 : window.innerWidth < 700 ? 0.6 : 1
+    let scale = window.innerWidth < 450 ? 0.4 : window.innerWidth < 700 ? 0.6 : 1
 
     const updateWindowWidth = () => {
         setWindowWidth(window.innerWidth)
