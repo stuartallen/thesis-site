@@ -28,6 +28,7 @@
 .arrow {
     /* Prevents highlighting elements */
     user-select: none;
+    pointer-events: all;
 }
 
 .disabled {
