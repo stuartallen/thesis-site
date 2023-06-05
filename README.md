@@ -12,7 +12,7 @@ You can run this app locally after cloning with the commands:
 
 `npm start`
 
-So long as Node and npm are installed on your system. 
+So long as Node, npx, and npm are installed on your system. 
 
 I have kept the rest of the default readme file for a React app available below.
 
