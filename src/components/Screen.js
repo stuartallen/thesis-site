@@ -4,7 +4,6 @@ import { Canvas } from "@react-three/fiber";
 
 import NormalMix from "./scenes/NormalMix";
 import LineIntegral from "./scenes/LineIntegral";
-import EMVisualizationWrapper from "./EMVisualizationWrapper";
 import SingleGaussian from "./scenes/SingleGaussian";
 import useColor from "../hooks/useColor";
 import EMVWrapper from "./EMVWrapper";

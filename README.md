@@ -1,3 +1,21 @@
+# Open, Online Interactive Visualizations for Learning About Gaussian Mixture Models
+
+This repository represents the code implementation component of my honors undergraduate thesis project in partial completion of the Honors Bachelor's of Science Degree at Oregon State University. Feel free to access the site [here](https://gmmthesissite.netlify.app/).
+
+This site is created with React and React-Three-Fiber and aims to teach readers about how Gaussian mixture models are optimized with text explanation and interactive visualization. The written component of this thesis project will be made available on the [Honors College Theses](https://ir.library.oregonstate.edu/collections/47429g339?locale=en) section of Oregon State Universitie's Scholar Archive.
+
+## Quick Start
+
+You can run this app locally after cloning with the commands:
+
+`npm i`
+
+`npm start`
+
+So long as Node and npm are installed on your system. 
+
+I have kept the rest of the default readme file for a React app available below.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
