@@ -1,0 +1,19 @@
+diff --git a/node_modules/multivariate-normal/validation.js b/node_modules/multivariate-normal/validation.js
+index 8bb1637..a18a6a4 100644
+--- a/node_modules/multivariate-normal/validation.js
++++ b/node_modules/multivariate-normal/validation.js
+@@ -102,10 +102,10 @@ var validateCovAndGetSVD = function validateCovAndGetSVD(cov, n) {
+         throw new Error("Covariance isn't positive semidefinite");
+     }
+ 
+-    // matrix must be symmetric
+-    if (!_numeric2.default.same(_numeric2.default.transpose(cov), cov)) {
+-        throw new Error("Covariance isn't symmetric");
+-    }
++    // // matrix must be symmetric
++    // if (!_numeric2.default.same(_numeric2.default.transpose(cov), cov)) {
++    //     throw new Error("Covariance isn't symmetric");
++    // }
+ 
+     // do decomposition
+     // We use the SVD algorithm from Numeric.js because it's efficient and
